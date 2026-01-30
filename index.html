@@ -3,43 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 歐洲之旅</title>
+    <title>2026 歐洲旅遊行程</title>
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="apple-touch-icon" href="icon.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-tab { border-bottom: 3px solid #3b82f6; color: #1d4ed8; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
 </head>
-<body class="bg-slate-100">
-    <div id="app" class="max-w-md mx-auto min-h-screen shadow-lg bg-white">
-        <header class="bg-slate-800 text-white p-6">
-            <h1 class="text-2xl font-bold">2026 歐洲旅遊</h1>
-            <p class="text-slate-400">英國 · 冰島 · 荷蘭</p>
+<body class="bg-slate-50 font-sans text-slate-900">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-xl flex flex-col">
+        <header class="bg-slate-800 text-white p-6 sticky top-0 z-10">
+            <h1 class="text-2xl font-bold tracking-tight">2026 歐洲三國之旅</h1>
+            <p class="text-slate-400 text-sm mt-1">2026.02.13 - 2026.03.01</p>
         </header>
-        <main id="content" class="p-4 space-y-4">
-            </main>
+
+        <nav class="flex bg-white border-b sticky top-[88px] z-10">
+            <button onclick="switchTab('daily')" id="tab-daily" class="flex-1 py-3 text-sm font-medium active-tab">每日行程</button>
+            <button onclick="switchTab('stays')" id="tab-stays" class="flex-1 py-3 text-sm font-medium text-slate-500">住宿資訊</button>
+            <button onclick="switchTab('notes')" id="tab-notes" class="flex-1 py-3 text-sm font-medium text-slate-500">攻略筆記</button>
+        </nav>
+
+        <main class="flex-1 p-4">
+            <div id="daily" class="tab-content active space-y-4">
+                <div class="space-y-4" id="daily-list"></div>
+            </div>
+
+            <div id="stays" class="tab-content space-y-4">
+                <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                    <h3 class="font-bold text-blue-900 underline">倫敦 London</h3>
+                    <p class="text-sm mt-2 text-blue-800">Point A Hotel London Paddington</p>
+                    <p class="text-sm text-blue-800">Point A Hotel London Kings Cross</p>
+                </div>
+                <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                    <h3 class="font-bold text-emerald-900 underline">冰島 Reykjavik</h3>
+                    <p class="text-sm mt-2 text-emerald-800">Hotel Von / Hotel Reykjavik Centrum</p>
+                </div>
+                <div class="p-4 bg-orange-50 rounded-xl border border-orange-100">
+                    <h3 class="font-bold text-orange-900 underline">荷蘭 Amsterdam</h3>
+                    <p class="text-sm mt-2 text-orange-800">Hotel Estheréa (艾斯特利亞酒店)</p>
+                </div>
+            </div>
+
+            <div id="notes" class="tab-content space-y-6">
+                <section>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">🏛️ 大英博物館必看</h3>
+                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                        <li>羅塞塔石碑 (Rosetta Stone)</li>
+                        <li>木乃伊與埃爾金大理石雕塑</li>
+                        <li>摩艾石像、波特蘭花瓶、路易斯棋子</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">🧺 實用資訊</h3>
+                    <p class="text-sm text-slate-600">倫敦自助洗衣：6kg 約 £6 / 10kg 約 £8</p>
+                </section>
+            </div>
+        </main>
     </div>
 
     <script>
-        // 這邊放入你的試算表資料
         const schedule = [
-            { date: '2/13', title: '抵達倫敦', desc: '入住 Paddington 飯店' },
-            { date: '2/15', title: '飛往冰島', desc: '入住 Hotel Von 準備 Tour' },
-            { date: '2/23', title: '前往阿姆斯特丹', desc: '入住 Hotel Estheréa' }
+            { date: "2/13 (五)", title: "抵達倫敦", desc: "TWN -> LHR (8:40-16:55)。入住 Paddington 飯店。", type: "flight" },
+            { date: "2/14 (六)", title: "倫敦市區", desc: "適應時差，拜訪朋友或市中心散步。", type: "info" },
+            { date: "2/15 (日)", title: "前往冰島", desc: "LHR -> KEF (13:40-17:05)。入住 Hotel Von。", type: "flight" },
+            { date: "2/16-2/17", title: "冰島 Tour", desc: "參加 3 天 2 夜當地套裝行程。", type: "tour" },
+            { date: "2/18 (三)", title: "返回市區", desc: "結束行程，回到雷克雅維克市區。", type: "info" },
+            { date: "2/21 (六)", title: "返回倫敦", desc: "KEF -> LHR (11:55-15:05)。入住 Kings Cross。", type: "flight" },
+            { date: "2/22 (日)", title: "倫敦文化日", desc: "大英博物館、西區音樂劇《歌劇魅影》。", type: "info" },
+            { date: "2/27 (五)", title: "前往荷蘭", desc: "歐洲之星 (11:04-16:11) 前往阿姆斯特丹。", type: "train" },
+            { date: "3/1 (日)", title: "返台", desc: "AMS -> TW (20:05-15:45)。", type: "flight" }
         ];
 
-        const content = document.getElementById('content');
-        schedule.forEach(item => {
-            content.innerHTML += `
-                <div class="border-l-4 border-blue-500 bg-white p-4 shadow-sm rounded">
-                    <span class="text-blue-600 font-bold">${item.date}</span>
-                    <h2 class="text-xl font-semibold text-slate-800">${item.title}</h2>
-                    <p class="text-slate-600 mt-2">${item.desc}</p>
+        function renderDaily() {
+            const list = document.getElementById('daily-list');
+            list.innerHTML = schedule.map(item => `
+                <div class="p-4 bg-white border rounded-xl shadow-sm">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-bold px-2 py-1 bg-slate-100 rounded text-slate-500">${item.date}</span>
+                        <span class="text-xs text-blue-500 font-bold uppercase">${item.type}</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">${item.title}</h3>
+                    <p class="text-sm text-slate-500 mt-1">${item.desc}</p>
                 </div>
-            `;
-        });
+            `).join('');
+        }
 
-        // 註冊 Service Worker (離線功能)
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-tab', 'text-slate-500'));
+            
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active-tab');
+            document.getElementById('tab-' + tabId).classList.remove('text-slate-500');
+        }
+
+        renderDaily();
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
