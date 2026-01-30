@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 歐洲旅遊管家</title>
+    <title>2026 歐洲旅遊管家 Pro</title>
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,14 +13,14 @@
         .page-transition { transition: transform 0.3s ease-in-out; }
         .slide-in { transform: translateX(0); }
         .slide-out { transform: translateX(100%); }
-        body { -webkit-tap-highlight-color: transparent; }
+        body { -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     </style>
 </head>
 <body class="bg-gray-50 overflow-hidden">
     <div id="list-page" class="max-w-md mx-auto h-screen bg-white shadow-2xl flex flex-col relative z-10">
-        <header class="bg-slate-900 text-white p-6 pt-12 shadow-lg">
-            <h1 class="text-2xl font-bold tracking-tight">2026 歐洲三國之旅</h1>
-            <p class="text-slate-400 text-xs mt-1 uppercase tracking-widest">UK · Iceland · Netherlands</p>
+        <header class="bg-indigo-950 text-white p-6 pt-12 shadow-lg">
+            <h1 class="text-2xl font-bold tracking-tight">2026 歐洲行程</h1>
+            <p class="text-indigo-300 text-xs mt-1 uppercase tracking-widest">UK · Iceland · Netherlands</p>
         </header>
 
         <main id="list-container" class="flex-1 overflow-y-auto p-4 space-y-3">
@@ -28,11 +28,11 @@
     </div>
 
     <div id="detail-page" class="fixed inset-0 max-w-md mx-auto bg-white z-20 page-transition slide-out shadow-2xl flex flex-col">
-        <header class="bg-slate-100 p-4 flex items-center border-b">
+        <header class="bg-slate-50 p-4 flex items-center border-b sticky top-0">
             <button onclick="closeDetail()" class="p-2 text-slate-600 active:bg-gray-200 rounded-full">
-                <i class="fas fa-chevron-left text-xl"></i>
+                <i class="fas fa-arrow-left text-xl"></i>
             </button>
-            <h2 id="detail-date" class="ml-4 font-bold text-lg text-slate-800">日期內容</h2>
+            <h2 id="detail-date" class="ml-4 font-bold text-lg text-slate-800">日期</h2>
         </header>
         
         <main class="flex-1 overflow-y-auto p-6 space-y-8">
@@ -42,41 +42,40 @@
     </div>
 
     <script>
+        // 嚴格依照 202602歐洲旅遊行程表 試算表內容生成 
         const travelData = [
-            { date: "2/13 (五)", city: "倫敦", transport: "中華航空 CI067 (8:40 - 16:55)，抵達倫敦希斯洛機場 (LHR) 第三航廈。", stay: "Point A Hotel London Paddington", plan: "首日抵達後，預計於 18:30 完成入境與拿取行李。隨後搭乘 Elizabeth Line 直達 Paddington 飯店。晚上在飯店附近簡單用餐，順便到便利商店購買未來幾天需要的飲用水與簡單乾糧，提早休息調時差。", note: "入境後記得先在櫃檯確認 Oyster Card 或使用感應式信用卡 (Contactless)。", link: "https://maps.app.goo.gl/PaddingtonMap" },
-            { date: "2/14 (六)", city: "倫敦", transport: "倫敦地鐵 (Tube)", stay: "Point A Hotel London Paddington", plan: "今日以輕鬆的慢活行程為主。上午前往海德公園散步，呼吸倫敦早晨的空氣。中午與當地的老同學聚餐，地點預定在蘇活區 (Soho) 的英式小酒館。下午則在柯芬園 (Covent Garden) 欣賞街頭藝人表演，選購一些特色手工藝品。", note: "倫敦天氣多變，建議隨身攜帶輕便摺疊傘。", link: "https://www.coventgarden.london/" },
-            { date: "2/15 (日)", city: "冰島", transport: "英國航空 BA800 (13:40 - 17:05) 往 KEF 機場。", stay: "Hotel Von (雷克雅維克市中心)", plan: "中午退房後搭車前往 LHR 第五航廈。抵達冰島凱夫拉維克機場後，搭乘預約好的 Flybus 接駁車前往飯店。入住飯店後，可以到主街 Laugavegur 走走，感受冰島寧靜的夜晚。", note: "冰島風大，下飛機前請務必穿上防風外套。", link: "https://www.re.is/flybus/" },
-            { date: "2/16 (一)", city: "冰島南岸", transport: "當地 Tour 接駁小巴", stay: "南岸特色民宿 (含在 Tour 內)", plan: "開始為期三天的南岸探索之旅。第一站將拜訪壯觀的塞里雅蘭瀑布 (Seljalandsfoss)，你可以走到瀑布後方感受震撼。隨後前往斯科加爾瀑布 (Skógafoss)。下午前往神秘的黑沙灘 (Reynisfjara)，觀察壯闊的玄武岩柱。", note: "黑沙灘海浪極度危險，嚴禁靠近水邊。", link: "https://adventures.is/iceland/day-tours/south-coast/" },
-            { date: "2/17 (二)", city: "冰島南岸", transport: "Tour 專屬小巴", stay: "南岸特色民宿 (含在 Tour 內)", plan: "今日行程重頭戲是藍冰洞探險與冰川健行 (Glacier Hiking)。在專業嚮導帶領下穿上冰爪，踏上千年冰河。下午前往傑古沙龍冰河湖 (Jökulsárlón)，觀察湖面上漂浮的巨大浮冰，並在隔壁的鑽石海灘拍照。", note: "需穿著硬底登山鞋，冰川上體感溫度極低。", link: "https://www.extremeiceland.is/" },
-            { date: "2/18 (三)", city: "雷克雅維克", transport: "Tour 專屬小巴", stay: "Hotel Von", plan: "今日返回市區途中，會拜訪維克小鎮 (Vik) 並尋找可愛的帕芬鳥 (Puffin) 蹤跡。傍晚回到雷克雅維克，晚上是自由時間，可以去嘗試冰島著名的「羊肉湯」或是排隊名店 Bæjarins Beztu Pylsur 熱狗。", note: "如果天氣預報極光指數高，晚上可加購追極光行程。", link: "http://www.bbp.is/" },
-            { date: "2/19 (四)", city: "雷克雅維克", transport: "接駁車", stay: "Hotel Von", plan: "上午安排著名的藍湖溫泉 (Blue Lagoon)。在極圈的冷空氣中泡在溫暖的矽泥溫泉中，敷上白色矽泥面膜。下午回到市區參觀哈爾格林姆教堂 (Hallgrimskirkja)，並登上塔頂俯瞰彩色的雷克雅維克房頂。", note: "藍湖溫泉水質會讓頭髮乾澀，泡湯前務必抹上護髮乳。", link: "https://www.bluelagoon.com/" },
-            { date: "2/20 (五)", city: "雷克雅維克", transport: "步行", stay: "Hotel Von", plan: "市區深度一日遊。早上參觀珍珠樓 (Perlan) 體驗室內冰洞。下午在市區的老港口走走，可以去參觀鯨魚博物館或極光博物館。最後一晚在冰島，可以挑選一些特殊的熔岩飾品作為紀念品。", note: "冰島店家大多不收現金，請準備好信用卡。", link: "https://perlan.is/" },
-            { date: "2/21 (六)", city: "倫敦", transport: "BA801 (11:55 - 15:05) 飛往 LHR。", stay: "Point A Hotel London Kings Cross", plan: "道別冰島，飛回倫敦。這次入住地理位置極佳的 Kings Cross 區。這裡有著名的 9 3/4 月台可以拍照。傍晚在車站附近的聖潘克拉斯國際車站逛逛，感受維多利亞式建築的宏偉。", note: "Kings Cross 區域治安尚可，但仍需注意隨身財物。", link: "https://www.kingscross.co.uk/" },
-            { date: "2/22 (日)", city: "倫敦", transport: "倫敦地鐵", stay: "Point A Hotel London Kings Cross", plan: "文化藝術日。早上 10:00 前往大英博物館，重點參觀羅塞塔石碑與木乃伊展區。傍晚前往 Her Majesty's Theatre 欣賞經典音樂劇《歌劇魅影》。演出預計 19:30 開始，建議先在劇院附近吃過晚餐。", note: "大英博物館建議預約免費入場券以節省排隊時間。", link: "https://www.britishmuseum.org/" },
-            { date: "2/23 (一)", city: "倫敦", transport: "地鐵 / 步行", stay: "Point A Hotel London Kings Cross", plan: "早上前往白金漢宮觀看 11:00 的衛兵交接儀式。下午沿著泰晤士河漫步，經過西敏寺、大笨鐘，最後跨過西敏橋。傍晚可搭乘倫敦眼 (London Eye) 從高處觀賞倫敦全景與夕陽。", note: "衛兵交接並非每天舉行，出發前務必上官網確認日期。", link: "https://www.rct.uk/visit/buckinghampalace" },
-            { date: "2/24 (二)", city: "倫敦", transport: "泰晤士河遊船 (Uber Boat)", stay: "Point A Hotel London Kings Cross", plan: "今日搭乘遊船前往格林威治 (Greenwich)。參觀皇家天文台，橫跨本初子午線。中午在格林威治市集品嚐各國料理。下午回程參觀倫敦塔橋，可以上到橋頂步道俯瞰車流。", note: "搭乘遊船可直接刷 Oyster Card，非常便利。", link: "https://www.rmg.co.uk/greenwich" },
-            { date: "2/25 (三)", city: "倫敦", transport: "火車 (National Rail)", stay: "Point A Hotel London Kings Cross", plan: "劍橋大學 (Cambridge) 一日遊。從 Kings Cross 車站出發約 50 分鐘即可抵達。體驗康河撐篙 (Punting)，欣賞國王學院與數學橋的美景。下午在劍橋古老的小徑中穿梭，感受濃厚的學術氣息。", note: "火車票建議在 Trainline App 提早購買預售票較便宜。", link: "https://www.visitcambridge.org/" },
-            { date: "2/26 (四)", city: "倫敦", transport: "地鐵 / 雙層巴士", stay: "Point A Hotel London Kings Cross", plan: "上午前往波特貝羅市集 (Portobello Market)，在彩色房子與古董攤位中尋寶。下午去攝政街與牛津街進行最後的採買。晚上整理行李，準備隔天跨國移動前往荷蘭。", note: "市集週六最熱鬧，但週四人潮較少逛起來較舒服。", link: "https://www.portobelloroad.co.uk/" },
-            { date: "2/27 (五)", city: "阿姆斯特丹", transport: "Eurostar 9126 (11:04 - 16:11)。", stay: "Hotel Estheréa", plan: "帶著大件行李前往 St. Pancras 車站搭乘歐洲之星。穿越海底隧道前往阿姆斯特丹。飯店位於運河區中心，充滿古典美感。晚上就在運河邊散步，享受阿姆斯特丹獨特的浪漫氛圍。", note: "歐洲之星需要提早 90 分鐘進行海關查驗與行李檢查。", link: "https://www.eurostar.com/" },
-            { date: "2/28 (六)", city: "阿姆斯特丹", transport: "電車", stay: "Hotel Estheréa", plan: "阿姆斯特丹市區巡禮。上午預約參觀安妮之家 (Anne Frank House)，下午參觀海尼根博物館 (Heineken Experience) 體驗啤酒製造過程。傍晚搭乘運河遊船，從不同視角欣賞這座北方威尼斯。", note: "安妮之家門票極難搶，務必在六週前的週二準時上網。", link: "https://www.annefrank.org/" },
-            { date: "3/1 (日)", city: "返台", transport: "KLM KL807 (20:05 - 15:45)。", stay: "機上", plan: "最後一上午在水壩廣場 (Dam Square) 購買伴手禮與荷蘭鬆餅。午餐後慢慢晃到阿姆斯特丹中央車站，搭乘火車前往史基浦機場 (AMS)。在機場做最後退稅處理，帶著滿滿回憶踏上歸途。", note: "史基浦機場安檢嚴格，建議提早 3 小時抵達。", link: "https://www.schiphol.nl/" }
+            { date: "2/13 (五)", city: "倫敦", transport: "TWN->LHR (8:40-16:55)", stay: "Point A Hotel London Paddington", plan: "1.希斯洛機場快線\n2.車站買 Sainsbury's 或 Marks＆Spencer 套餐\n3.賭場 Grosvenor Casino (The Victoria)", note: "帕丁頓熊的名字源自此車站，穿著厚呢風衣與長統靴是經典形象。", link: "https://maps.app.goo.gl/ak5JZuNuAsrRM3Q48,1.超市:https://maps.app.goo.gl/bCLQyB3sjF5vuund7" },
+            { date: "2/14 (六)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel London Paddington", plan: "1.拜訪 Latifa 家 (Beckenham)\n2.西敏寺、國會大廈、大笨鐘、倫敦塔橋", note: "倫敦遊記參考網址已附於連結中。", link: "https://www.instagram.com/reel/C9w9ob7tgI7/" },
+            { date: "2/15 (日)", city: "冰島", transport: "LHR->KEF (13:40-17:05)", stay: "Hotel Von", plan: "1.Hallgrimskirkja 教堂\n2.超市 Bónus 採買", note: "尚需訂購門票與交通車。", link: "https://maps.app.goo.gl/e6PgwZnsWJUvrHCH9,冰島Local" },
+            { date: "2/16 (一)", city: "冰島", transport: "Local Tour", stay: "3 Days Local tour", plan: "冰島 Local Tour 第一日行程。", note: "Tour 內容細節參考連結。", link: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18&startingLocationId=0&startingLocationName=冰岛任意地点,1.超市:https://maps.app.goo.gl/fteqttkEzpcWw6Xr9" },
+            { date: "2/17 (二)", city: "冰島", transport: "Local Tour", stay: "3 Days Local tour", plan: "冰島 Local Tour 第二日行程。", note: "Local Tour 期間住宿已含。", link: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18&startingLocationId=0&startingLocationName=冰岛任意地点,1.超市:https://maps.app.goo.gl/fteqttkEzpcWw6Xr9" },
+            { date: "2/18 (三)", city: "冰島", transport: "Back to 雷克雅維克", stay: "Hotel Reykjavik Centrum", plan: "1.超市 Town Market\n2.藍湖溫泉 (Blue Lagoon)\n3.Viking Village 或 Old Iceland 晚餐", note: "首推 Viking Village，需搭公車或自駕。", link: "https://maps.app.goo.gl/9WQBwMpKsktCennQ7,餐廳：" },
+            { date: "2/19 (四)", city: "倫敦", transport: "KEF->LHR (11:55-15:05)", stay: "Point A Hotel Kings Cross", plan: "休息 & 附近逛逛，感受 Empire Casino 或 The Palm Beach Casino 氛圍。", note: "飯店提供較貴洗衣服務，建議找自助洗衣店。", link: "https://maps.app.goo.gl/V5JfSQJZbRMHnGnz7,1.Old" },
+            { date: "2/20 (五)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel Kings Cross", plan: "1.大英博物館 (10:00-17:00)\n2.柯芬園、聖詹姆斯公園、白金漢宮", note: "自助洗衣店：6kg 約 6 磅，烘乾半小時 3 磅。", link: "https://maps.app.goo.gl/6RtuNiktfU8Wspwf9?g_st=ic" },
+            { date: "2/21 (六)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel Kings Cross", plan: "1.劍橋觀光\n2.歌劇魅影 (19:30 His Majesty's Theatre)", note: "最近的自助洗衣店營業至 19:00。", link: "https://bookings.dineout.is/fjorukrain?do_referrer=OcjATyyurm&lng=zh-TW,https://maps.app.goo.gl/6UXAbD23WAUKioTZ7" },
+            { date: "2/22 (日)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel Kings Cross", plan: "牛津一日遊：\n1.Radcliffe Camera 圓形圖書館\n2.嘆息橋 (Bridge of Signs)\n3.基督教學院 (哈利波特取景地)", note: "牛津車站步行至大學約 15 分鐘，學院散落各處。", link: "https://maps.app.goo.gl/z2eW39dTfH5h3yW19" },
+            { date: "2/23 (一)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel Kings Cross", plan: "1.白金漢宮衛兵交接 (11:00)\n2.皇家馬廄\n3.SOHO、Piccadilly circus\n4.中國城賭場", note: "衛兵交接建議 10 點卡位。波羅市場推薦手撕豬三明治。", link: "https://maps.app.goo.gl/hWQBdAJak6JgpuoEA,https://maps.app.goo.gl/eauK1RuqtqR1TAzG6,https://flybyfantasy.com/london-tourist-spot/the-royal-mews/,https://maps.app.goo.gl/nxQeMeUzXiU2FezD7" },
+            { date: "2/24 (二)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel Kings Cross", plan: "1.Kings Cross 9 3/4 月台\n2.Coal Drop Yard 逛街", note: "格林威治天文台較遠，視體力前往。", link: "https://maps.app.goo.gl/6RtuNiktfU8Wspwf9?g_st=ic" },
+            { date: "2/27 (五)", city: "阿姆", transport: "Eurostar (11:04-16:20)", stay: "Hotel Estheréa", plan: "1.紅燈區秘密博物館\n2.Casa Rosso 成人秀 (65歐)", note: "歐洲之星由 St. Pancras 出發。", link: "https://maps.app.goo.gl/V5JfSQJZbRMHnGnz7,1.Old" },
+            { date: "2/28 (六)", city: "阿姆", transport: "市區交通", stay: "Hotel Estheréa", plan: "1.水壩廣場、運河遊船、安妮之家\n2.海尼根博物館、國家博物館、梵谷博物館", note: "飯店位於運河區中心。", link: "https://maps.app.goo.gl/zjBCPsMom47zuVCH9?g_st=ic" },
+            { date: "3/1 (日)", city: "返台", transport: "AMS->TW (20:05-15:45)", stay: "生存成功！", plan: "1.A'DAM Tower\n2.大麻博物館", note: "提早 3 小時抵達機場。", link: "https://maps.app.goo.gl/zjBCPsMom47zuVCH9?g_st=ic" }
         ];
 
         function init() {
             const listContainer = document.getElementById('list-container');
             listContainer.innerHTML = travelData.map((item, index) => `
-                <div onclick="showDetail(${index})" class="group bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:scale-95 transition-all">
+                <div onclick="showDetail(${index})" class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:scale-95 transition-all">
                     <div class="flex items-center space-x-4">
-                        <div class="text-center bg-slate-50 w-16 py-2 rounded-xl border border-slate-100">
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase">${item.city}</span>
-                            <span class="block text-sm font-black text-slate-700">${item.date.split(' ')[0]}</span>
+                        <div class="text-center bg-indigo-50 w-16 py-2 rounded-xl">
+                            <span class="block text-[10px] text-indigo-400 font-bold uppercase">${item.city}</span>
+                            <span class="block text-sm font-black text-indigo-700">${item.date.split(' ')[0]}</span>
                         </div>
                         <div>
-                            <h3 class="font-bold text-slate-800 text-base">${item.plan.substring(0, 15)}...</h3>
-                            <p class="text-xs text-slate-400 mt-1"><i class="fas fa-map-marker-alt mr-1"></i>${item.city}</p>
+                            <h3 class="font-bold text-slate-800 text-sm">${item.plan.split('\n')[0]}</h3>
+                            <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">${item.city}</p>
                         </div>
                     </div>
-                    <i class="fas fa-chevron-right text-slate-200 group-active:text-slate-400"></i>
+                    <i class="fas fa-chevron-right text-slate-200"></i>
                 </div>
             `).join('');
         }
@@ -86,45 +85,43 @@
             const detailPage = document.getElementById('detail-page');
             const detailContent = document.getElementById('detail-content');
             
-            document.getElementById('detail-date').innerText = `${item.date} 行程詳情`;
+            document.getElementById('detail-date').innerText = item.date;
             
             detailContent.innerHTML = `
-                <div class="space-y-8 animate-in slide-in-from-right duration-300">
+                <div class="space-y-6 animate-in slide-in-from-right duration-300">
                     <section>
-                        <label class="text-[10px] font-black text-slate-300 uppercase tracking-widest block mb-2">Transportation</label>
-                        <div class="flex items-start space-x-4">
-                            <div class="bg-blue-50 p-3 rounded-2xl text-blue-500"><i class="fas fa-plane-departure"></i></div>
-                            <p class="text-slate-700 font-medium leading-relaxed">${item.transport}</p>
+                        <label class="text-[10px] font-black text-indigo-300 uppercase block mb-2 tracking-widest">Transport</label>
+                        <div class="flex items-center space-x-3 bg-indigo-50/50 p-3 rounded-xl">
+                            <i class="fas fa-route text-indigo-500"></i>
+                            <p class="text-sm text-slate-700 font-semibold">${item.transport}</p>
                         </div>
                     </section>
 
                     <section>
-                        <label class="text-[10px] font-black text-slate-300 uppercase tracking-widest block mb-2">Accommodation</label>
-                        <div class="flex items-start space-x-4">
-                            <div class="bg-emerald-50 p-3 rounded-2xl text-emerald-500"><i class="fas fa-h-square"></i></div>
-                            <p class="text-slate-700 font-medium leading-relaxed">${item.stay}</p>
+                        <label class="text-[10px] font-black text-indigo-300 uppercase block mb-2 tracking-widest">Stay</label>
+                        <div class="flex items-center space-x-3 bg-emerald-50/50 p-3 rounded-xl">
+                            <i class="fas fa-hotel text-emerald-500"></i>
+                            <p class="text-sm text-slate-700 font-semibold">${item.stay}</p>
                         </div>
                     </section>
 
                     <section>
-                        <label class="text-[10px] font-black text-slate-300 uppercase tracking-widest block mb-2">Itinerary</label>
-                        <div class="flex items-start space-x-4">
-                            <div class="bg-indigo-50 p-3 rounded-2xl text-indigo-500"><i class="fas fa-map-marked-alt"></i></div>
-                            <p class="text-slate-600 leading-relaxed text-sm bg-indigo-50/30 p-4 rounded-2xl border border-indigo-50/50">${item.plan}</p>
+                        <label class="text-[10px] font-black text-indigo-300 uppercase block mb-2 tracking-widest">Itinerary</label>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                            <p class="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">${item.plan}</p>
                         </div>
                     </section>
 
                     <section>
-                        <label class="text-[10px] font-black text-slate-300 uppercase tracking-widest block mb-2">Notes</label>
-                        <div class="flex items-start space-x-4">
-                            <div class="bg-amber-50 p-3 rounded-2xl text-amber-500"><i class="fas fa-sticky-note"></i></div>
-                            <p class="text-slate-600 italic text-sm leading-relaxed">${item.note}</p>
+                        <label class="text-[10px] font-black text-indigo-300 uppercase block mb-2 tracking-widest">Note</label>
+                        <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
+                            <p class="text-sm text-amber-800 italic leading-relaxed">${item.note}</p>
                         </div>
                     </section>
 
-                    <a href="${item.link}" target="_blank" class="flex items-center justify-center space-x-3 bg-slate-900 text-white w-full py-4 rounded-2xl font-bold shadow-xl active:scale-95 transition-transform mt-10">
-                        <i class="fas fa-location-arrow"></i>
-                        <span>開啟參考連結 / 地圖</span>
+                    <a href="${item.link}" target="_blank" class="flex items-center justify-center space-x-3 bg-slate-900 text-white w-full py-4 rounded-2xl font-bold shadow-xl active:scale-95 transition-transform mt-6">
+                        <i class="fas fa-link"></i>
+                        <span>參考連結 / 地圖</span>
                     </a>
                 </div>
             `;
