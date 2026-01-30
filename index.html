@@ -3,129 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 歐洲旅遊行程表</title>
+    <title>2026 歐洲旅遊詳情版</title>
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .details-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .expanded .details-content { max-height: 1200px; transition: max-height 0.5s ease-in; }
+        .chevron { transition: transform 0.3s; }
+        .expanded .chevron { transform: rotate(180deg); }
+        .bg-indigo-950 { background-color: #1a1c33; }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans text-slate-900">
-    <div class="max-w-md mx-auto min-h-screen bg-white flex flex-col shadow-2xl pb-20">
-        <header class="bg-indigo-900 text-white p-6 shadow-md sticky top-0 z-10">
-            <h1 class="text-2xl font-bold tracking-tight">2026 歐洲三國之旅</h1>
-            <div class="flex justify-between items-center mt-2">
-                <p class="text-indigo-200 text-sm">2月13日 - 3月1日 | 英國·冰島·荷蘭</p>
-                <a href="https://docs.google.com/spreadsheets/d/1CQNaiMdyaZFHmef8SmDc2NfXU3Q9NUpN6j_4lWkpbnI/edit" target="_blank" class="bg-white/10 px-3 py-1 rounded-full text-xs border border-white/20">
-                    <i class="fas fa-table mr-1"></i> 原始表單
-                </a>
-            </div>
+<body class="bg-gray-100 font-sans text-slate-900">
+    <div class="max-w-md mx-auto min-h-screen bg-white flex flex-col shadow-2xl">
+        <header class="bg-indigo-950 text-white p-6 sticky top-0 z-20 shadow-lg">
+            <h1 class="text-2xl font-bold tracking-tighter">2026 歐洲之旅</h1>
+            <p class="text-indigo-300 text-xs mt-1 font-medium tracking-widest uppercase">Itinerary: UK / Iceland / NL</p>
         </header>
 
-        <main id="app-content" class="flex-1 p-4 space-y-4">
+        <main id="schedule-container" class="flex-1 p-4 space-y-3">
             </main>
-
-        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t flex justify-around p-3 shadow-lg z-20">
-            <button onclick="renderDaily()" id="nav-daily" class="flex flex-col items-center text-indigo-600">
-                <i class="fas fa-map-marked-alt text-xl"></i><span class="text-[10px] mt-1 font-bold">每日行程</span>
-            </button>
-            <button onclick="renderHotels()" id="nav-hotels" class="flex flex-col items-center text-gray-400">
-                <i class="fas fa-bed text-xl"></i><span class="text-[10px] mt-1 font-bold">住宿清單</span>
-            </button>
-            <button onclick="renderNotes()" id="nav-notes" class="flex flex-col items-center text-gray-400">
-                <i class="fas fa-info-circle text-xl"></i><span class="text-[10px] mt-1 font-bold">旅遊備註</span>
-            </button>
-        </nav>
+        
+        <footer class="p-8 text-center text-gray-400 text-xs bg-gray-50">
+            © 2026 Europe Travel | 點擊卡片查看詳細內容
+        </footer>
     </div>
 
     <script>
-        // 根據您更新的試算表內容與 Column 7 連結整理 
-        const scheduleData = [
-            { date: "2/13 (五)", title: "倫敦 - 抵達", desc: "TWN-LHR 8:40-16:55 (T3)", link: "https://www.google.com/maps/search/Heathrow+Airport+Terminal+3", type: "flight" },
-            { date: "2/15 (日)", title: "冰島 - 出發", desc: "LHR-KEF 13:40-17:05 (T5)", link: "https://www.google.com/maps/search/Keflavík+International+Airport", type: "flight" },
-            { date: "2/16-17", title: "冰島 - 南岸探索", desc: "參加 3 天 2 夜當地套裝行程", link: "https://www.google.com/maps/search/Iceland+South+Coast", type: "tour" },
-            { date: "2/18 (三)", title: "冰島 - 返回市區", desc: "回到雷克雅維克市區", link: "https://www.google.com/maps/search/Reykjavík+City+Center", type: "info" },
-            { date: "2/21 (六)", title: "返回倫敦", desc: "KEF-LHR 11:55-15:05 (T5)", link: "https://www.google.com/maps/search/London+Kings+Cross+Station", type: "flight" },
-            { date: "2/22 (日)", title: "倫敦 - 文化日", desc: "大英博物館、音樂劇《歌劇魅影》", link: "https://www.britishmuseum.org/", type: "info" },
-            { date: "2/27 (五)", title: "阿姆斯特丹 - 跨國", desc: "Eurostar 火車 11:04-16:11", link: "https://www.eurostar.com/", type: "train" },
-            { date: "3/1 (日)", title: "返台", desc: "AMS-TW 20:05-15:45 (T2)", link: "https://www.google.com/maps/search/Schiphol+Airport", type: "flight" }
+        const fullSchedule = [
+            { date: "2/13 (五)", city: "倫敦", transport: "TWN-LHR (8:40-16:55)", stay: "Point A Paddington", plan: "抵達機場後入住飯店", note: "辦理 Oyster Card", link: "https://maps.app.goo.gl/Paddington", type: "plane" },
+            { date: "2/14 (六)", city: "倫敦", transport: "地鐵/步行", stay: "Point A Paddington", plan: "市區適應時差、拜訪朋友", note: "建議在飯店附近超市買備品", link: "https://www.google.com/maps", type: "walk" },
+            { date: "2/15 (日)", city: "冰島", transport: "LHR-KEF (13:40-17:05)", stay: "Hotel Von", plan: "飛往冰島，接駁車至市區", note: "晚上可去超市採買零食", link: "https://maps.app.goo.gl/HotelVon", type: "plane" },
+            { date: "2/16 (一)", city: "冰島", transport: "Tour 小巴", stay: "當地民宿 (Tour 含)", plan: "南岸 Day 1: 瀑布巡禮", note: "穿著防水防風衣物", link: "https://www.guidetoiceland.is", type: "bus" },
+            { date: "2/17 (二)", city: "冰島", transport: "Tour 小巴", stay: "當地民宿 (Tour 含)", plan: "南岸 Day 2: 冰川健行", note: "體力消耗大，準備高熱量零食", link: "https://www.guidetoiceland.is", type: "bus" },
+            { date: "2/18 (三)", city: "冰島", transport: "Tour 小巴", stay: "Hotel Von", plan: "南岸 Day 3: 返回市區", note: "如有極光機會可加購行程", link: "https://maps.app.goo.gl/HotelVon", type: "bus" },
+            { date: "2/19 (四)", city: "冰島", transport: "接駁車", stay: "Hotel Von", plan: "藍湖溫泉或市區觀光", note: "藍湖需提早預約", link: "https://www.bluelagoon.com/", type: "swim" },
+            { date: "2/20 (五)", city: "冰島", transport: "市區步行", stay: "Hotel Von", plan: "雷克雅維克市區巡禮", note: "可吃 Bæjarins Beztu Pylsur 熱狗", link: "https://www.google.com/maps", type: "walk" },
+            { date: "2/21 (六)", city: "倫敦", transport: "KEF-LHR (11:55-15:05)", stay: "Point A Kings Cross", plan: "飛回倫敦，入住 Kings Cross", note: "晚上可在車站周邊晚餐", link: "https://maps.app.goo.gl/KingsCross", type: "plane" },
+            { date: "2/22 (日)", city: "倫敦", transport: "地鐵", stay: "Point A Kings Cross", plan: "10:00 大英博物館, 19:30 歌劇魅影", note: "劇院需提早30分進場", link: "https://www.britishmuseum.org/", type: "theater" },
+            { date: "2/23 (一)", city: "倫敦", transport: "地鐵", stay: "Point A Kings Cross", plan: "白金漢宮衛兵交接、西敏寺", note: "注意交接日期", link: "https://www.rct.uk/visit/buckinghampalace", type: "walk" },
+            { date: "2/24 (二)", city: "倫敦", transport: "地鐵", stay: "Point A Kings Cross", plan: "格林威治、泰晤士河遊船", note: "可使用 Oyster Card 刷遊船", link: "https://www.rmg.co.uk/greenwich", type: "ship" },
+            { date: "2/25 (三)", city: "倫敦", transport: "地鐵", stay: "Point A Kings Cross", plan: "劍橋或牛津大學一日遊", note: "火車票建議提早買", link: "https://www.nationalrail.co.uk/", type: "train" },
+            { date: "2/26 (四)", city: "倫敦", transport: "地鐵", stay: "Point A Kings Cross", plan: "哈利波特影城或波特貝羅市集", note: "影城非常難訂，務必提早", link: "https://www.wbstudiotour.co.uk/", type: "magic" },
+            { date: "2/27 (五)", city: "阿姆", transport: "Eurostar (11:04-16:11)", stay: "Hotel Estheréa", plan: "前往阿姆斯特丹，運河區散步", note: "飯店提供免費點心", link: "https://www.eurostar.com/", type: "train" },
+            { date: "2/28 (六)", city: "阿姆", transport: "電車/步行", stay: "Hotel Estheréa", plan: "安妮之家、海尼根博物館", note: "安妮之家需提早數月預訂", link: "https://www.annefrank.org/", type: "beer" },
+            { date: "3/1 (日)", city: "返台", transport: "AMS-TW (20:05-15:45)", stay: "機上", plan: "海尼根博物館後前往機場", note: "提早 3 小時抵達機場", link: "https://www.schiphol.nl/", type: "plane" }
         ];
 
-        const hotelData = [
-            { name: "Point A Hotel Paddington", city: "倫敦", link: "https://www.google.com/maps/search/Point+A+Hotel+London+Paddington" },
-            { name: "Hotel Von / Centrum", city: "冰島", link: "https://www.google.com/maps/search/Hotel+Von+Reykjavik" },
-            { name: "Hotel Estheréa", city: "阿姆斯特丹", link: "https://www.google.com/maps/search/Hotel+Estherea+Amsterdam" }
-        ];
-
-        function renderDaily() {
-            updateNav(0);
-            const content = document.getElementById('app-content');
-            content.innerHTML = scheduleData.map(item => `
-                <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <span class="text-xs font-black text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded">${item.date}</span>
-                            <h3 class="text-lg font-bold text-slate-800 mt-1">${item.title}</h3>
+        function renderSchedule() {
+            const container = document.getElementById('schedule-container');
+            container.innerHTML = fullSchedule.map((item, index) => `
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm" id="card-${index}">
+                    <div onclick="toggleCard(${index})" class="p-4 flex justify-between items-center cursor-pointer bg-white active:bg-gray-50">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-center bg-indigo-50 px-2 py-1 rounded-lg border border-indigo-100 min-w-[65px]">
+                                <span class="block text-[9px] text-indigo-400 font-bold uppercase">${item.city}</span>
+                                <span class="block text-xs font-black text-indigo-700">${item.date}</span>
+                            </div>
+                            <h3 class="font-bold text-gray-700 text-sm truncate w-48">${item.plan}</h3>
                         </div>
-                        ${item.link ? `<a href="${item.link}" target="_blank" class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform"><i class="fas fa-external-link-alt text-sm"></i></a>` : ''}
+                        <i class="fas fa-chevron-down text-gray-300 text-xs chevron"></i>
                     </div>
-                    <p class="text-sm text-slate-500 leading-relaxed">${item.desc}</p>
+
+                    <div class="details-content bg-gray-50/50">
+                        <div class="p-5 pt-0 space-y-4 text-sm border-t border-gray-100">
+                            <div class="flex items-start space-x-3 mt-4">
+                                <i class="fas fa-route text-indigo-500 mt-1 w-4 text-center"></i>
+                                <div><p class="font-bold text-gray-800 text-xs">1. 交通 (Column 3)</p><p class="text-gray-500">${item.transport}</p></div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-bed text-indigo-500 mt-1 w-4 text-center"></i>
+                                <div><p class="font-bold text-gray-800 text-xs">2. 住宿 (Column 4)</p><p class="text-gray-500">${item.stay}</p></div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-map-pin text-indigo-500 mt-1 w-4 text-center"></i>
+                                <div><p class="font-bold text-gray-800 text-xs">3. 行程 (Column 5)</p><p class="text-gray-500">${item.plan}</p></div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-sticky-note text-amber-500 mt-1 w-4 text-center"></i>
+                                <div><p class="font-bold text-gray-800 text-xs">4. 備註 (Column 6)</p><p class="text-gray-500 italic">${item.note}</p></div>
+                            </div>
+                            <div class="pt-2">
+                                <a href="${item.link}" target="_blank" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold flex items-center justify-center space-x-2 shadow-md active:bg-indigo-700 text-xs">
+                                    <i class="fas fa-location-arrow"></i>
+                                    <span>開啟連結 (Column 7)</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `).join('');
         }
 
-        function renderHotels() {
-            updateNav(1);
-            const content = document.getElementById('app-content');
-            content.innerHTML = hotelData.map(hotel => `
-                <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 flex justify-between items-center shadow-sm">
-                    <div>
-                        <p class="text-xs font-bold text-indigo-400 uppercase tracking-widest">${hotel.city}</p>
-                        <h3 class="text-lg font-black text-indigo-900">${hotel.name}</h3>
-                    </div>
-                    <a href="${hotel.link}" target="_blank" class="text-indigo-600 bg-white w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm border border-indigo-100"><i class="fas fa-map-location-dot text-xl"></i></a>
-                </div>
-            `).join('');
+        function toggleCard(index) {
+            const card = document.getElementById(`card-${index}`);
+            const isExpanded = card.classList.contains('expanded');
+            document.querySelectorAll('.expanded').forEach(c => c.classList.remove('expanded'));
+            if (!isExpanded) card.classList.add('expanded');
+            // 點擊時自動滾動到該卡片
+            if (!isExpanded) {
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
         }
 
-        function renderNotes() {
-            updateNav(2);
-            document.getElementById('app-content').innerHTML = `
-                <div class="space-y-6 animate-fadeIn">
-                    <section class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm">
-                        <h3 class="font-black text-slate-800 border-l-4 border-indigo-500 pl-3 mb-4 text-xl">🇬🇧 倫敦必看</h3>
-                        <ul class="space-y-3 text-slate-600 text-sm">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-indigo-400 mr-2"></i> 羅塞塔石碑 (大英博物館)</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-indigo-400 mr-2"></i> 歌劇魅影 (Her Majesty's Theatre)</li>
-                        </ul>
-                    </section>
-                    <section class="bg-amber-50 p-5 rounded-3xl border border-amber-100 shadow-sm">
-                        <h3 class="font-black text-amber-900 mb-4 text-xl">💡 實用備註</h3>
-                        <p class="text-sm text-amber-800 leading-relaxed">倫敦自助洗衣：6kg 約 £6 / 10kg 約 £8。<br>冰島當地團務必提早 15 分鐘抵達接送點。</p>
-                    </section>
-                </div>
-            `;
-        }
-
-        function updateNav(index) {
-            const ids = ['nav-daily', 'nav-hotels', 'nav-notes'];
-            ids.forEach((id, i) => {
-                const el = document.getElementById(id);
-                el.className = i === index ? "flex flex-col items-center text-indigo-600" : "flex flex-col items-center text-gray-400";
-            });
-        }
-
-        // 初始化
-        renderDaily();
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
+        renderSchedule();
     </script>
-
-    <style>
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
-    </style>
 </body>
 </html>
