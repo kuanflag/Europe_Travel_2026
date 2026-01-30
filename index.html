@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 歐洲之旅</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="icon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+    <div id="app" class="max-w-md mx-auto min-h-screen shadow-lg bg-white">
+        <header class="bg-slate-800 text-white p-6">
+            <h1 class="text-2xl font-bold">2026 歐洲旅遊</h1>
+            <p class="text-slate-400">英國 · 冰島 · 荷蘭</p>
+        </header>
+        <main id="content" class="p-4 space-y-4">
+            </main>
+    </div>
+
+    <script>
+        // 這邊放入你的試算表資料
+        const schedule = [
+            { date: '2/13', title: '抵達倫敦', desc: '入住 Paddington 飯店' },
+            { date: '2/15', title: '飛往冰島', desc: '入住 Hotel Von 準備 Tour' },
+            { date: '2/23', title: '前往阿姆斯特丹', desc: '入住 Hotel Estheréa' }
+        ];
+
+        const content = document.getElementById('content');
+        schedule.forEach(item => {
+            content.innerHTML += `
+                <div class="border-l-4 border-blue-500 bg-white p-4 shadow-sm rounded">
+                    <span class="text-blue-600 font-bold">${item.date}</span>
+                    <h2 class="text-xl font-semibold text-slate-800">${item.title}</h2>
+                    <p class="text-slate-600 mt-2">${item.desc}</p>
+                </div>
+            `;
+        });
+
+        // 註冊 Service Worker (離線功能)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
