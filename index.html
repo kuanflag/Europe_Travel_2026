@@ -10,201 +10,206 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .page-transition { transition: transform 0.3s ease-in-out; }
-        .slide-in { transform: translateX(0); }
-        .slide-out { transform: translateX(100%); }
         body { -webkit-tap-highlight-color: transparent; font-family: -apple-system, system-ui, sans-serif; }
+        .page-transition { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .slide-out { transform: translateX(100%); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .active-nav { color: #4f46e5; }
     </style>
 </head>
 <body class="bg-gray-50 overflow-hidden text-slate-900">
-    <div id="list-page" class="max-w-md mx-auto h-screen bg-white shadow-2xl flex flex-col relative z-10">
-        <header class="bg-indigo-950 text-white p-6 pt-12 shadow-lg text-center font-bold">
-            <h1 class="text-lg uppercase tracking-wider">歐洲旅行 UK -> IceLand -> Netherland</h1>
-        </header>
-        <main id="list-container" class="flex-1 overflow-y-auto p-4 space-y-3">
-            </main>
-    </div>
 
-    <div id="detail-page" class="fixed inset-0 max-w-md mx-auto bg-white z-20 page-transition slide-out shadow-2xl flex flex-col">
-        <header class="bg-slate-50 p-4 flex items-center border-b sticky top-0">
-            <button onclick="closeDetail()" class="p-2 text-slate-600 active:bg-gray-200 rounded-full">
-                <i class="fas fa-arrow-left text-xl"></i>
-            </button>
-            <h2 id="detail-date" class="ml-4 font-bold text-lg text-slate-800">詳細資訊</h2>
+    <div class="max-w-md mx-auto h-screen bg-white shadow-2xl flex flex-col relative overflow-hidden">
+        
+        <header class="bg-indigo-950 text-white p-6 pt-12 shadow-lg text-center font-bold">
+            <h1 class="text-sm uppercase tracking-widest">歐洲旅行 UK -> IceLand -> Netherland</h1>
         </header>
-        <main class="flex-1 overflow-y-auto p-6 space-y-6">
-            <div id="detail-content"></div>
-            <div id="links-container" class="pt-4 border-t border-gray-100 space-y-3"></div>
+
+        <main class="flex-1 overflow-hidden relative">
+            
+            <section id="tab-daily" class="tab-content active h-full overflow-y-auto p-4 pb-24 space-y-3">
+                </section>
+
+            <section id="tab-stays" class="tab-content h-full overflow-y-auto p-4 pb-24 space-y-4">
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-indigo-900 mb-2">倫敦 London</h3>
+                    <p class="text-sm text-slate-600">2/13-2/15: Point A Hotel Paddington</p>
+                    <p class="text-sm text-slate-600">2/21-2/27: Point A Hotel Kings Cross</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-indigo-900 mb-2">冰島 Iceland</h3>
+                    <p class="text-sm text-slate-600">2/15, 2/18-2/21: Hotel Von / Centrum</p>
+                    <p class="text-sm text-slate-600">2/16-2/17: Local Tour 包含住宿</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-indigo-900 mb-2">荷蘭 Amsterdam</h3>
+                    <p class="text-sm text-slate-600">2/27-3/01: Hotel Estheréa</p>
+                </div>
+            </section>
+
+            <section id="tab-notes" class="tab-content h-full overflow-y-auto p-4 pb-24 space-y-6">
+                <div class="space-y-2">
+                    <h3 class="font-bold text-indigo-600 border-l-4 border-indigo-600 pl-2">大英博物館必看</h3>
+                    <p class="text-xs text-slate-500 italic">羅塞塔石碑 (Room 4)、帕德嫩神廟 (Room 18)、埃及木乃伊 (Room 62-63)、復活節島摩艾石像 (Room 24)。</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold text-indigo-600 border-l-4 border-indigo-600 pl-2">生活小知識</h3>
+                    <ul class="text-sm text-slate-600 list-disc list-inside space-y-1">
+                        <li>倫敦自助洗衣：6kg/£6, 烘乾半小時/£3。</li>
+                        <li>冰島藍湖必抹護髮乳，避免髮質乾澀。</li>
+                        <li>荷蘭安妮之家需提前 6 週預約。</li>
+                    </ul>
+                </div>
+            </section>
         </main>
+
+        <div id="detail-page" class="absolute inset-0 bg-white z-30 page-transition slide-out flex flex-col">
+            <header class="bg-slate-50 p-4 pt-12 flex items-center border-b">
+                <button onclick="closeDetail()" class="p-2 text-slate-600 active:bg-gray-200 rounded-full">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </button>
+                <h2 id="detail-date" class="ml-4 font-bold text-slate-800 text-lg">日期詳情</h2>
+            </header>
+            <main class="flex-1 overflow-y-auto p-6 space-y-6">
+                <div id="detail-content"></div>
+                <div id="links-container" class="space-y-3"></div>
+            </main>
+        </div>
+
+        <nav class="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t flex justify-around p-3 pb-6 z-20">
+            <button onclick="switchTab('daily')" id="nav-daily" class="flex flex-col items-center active-nav">
+                <i class="fas fa-calendar-alt text-xl"></i><span class="text-[10px] mt-1 font-bold">行程表</span>
+            </button>
+            <button onclick="switchTab('stays')" id="nav-stays" class="flex flex-col items-center text-slate-400">
+                <i class="fas fa-bed text-xl"></i><span class="text-[10px] mt-1 font-bold">住宿</span>
+            </button>
+            <button onclick="switchTab('notes')" id="nav-notes" class="flex flex-col items-center text-slate-400">
+                <i class="fas fa-lightbulb text-xl"></i><span class="text-[10px] mt-1 font-bold">筆記</span>
+            </button>
+        </nav>
     </div>
 
     <script>
         const travelData = [
             { 
-                date: "2/13 (五)", city: "倫敦", 
-                transport: "TWN -> LHR 8:40(T1) -> 16:55(T3)", 
-                stay: "Point A Hotel London Paddington", 
-                plan: "1. 希斯洛機場快線\n2. 車站買 Sainsbury's / Marks＆Spencer 套餐，或樓上 Leon\n3. 賭場 Grosvenor Casino (The Victoria)", 
-                note: "Paddington Bear 名稱源自此，穿著厚呢風衣與長統靴是經典形象。", 
-                links: [{ label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/" }] 
+                date: "2/13 (五)", city: "倫敦", transport: "TWN->LHR 8:40(T1)->16:55(T3)", stay: "Point A Paddington", 
+                plan: "1. 希斯洛機場快線往市區。\n2. 晚餐建議：車站買 Sainsbury's / Marks＆Spencer 套餐，或樓上 Leon 輕食。\n3. 晚上賭場規劃：Grosvenor Casino (The Victoria)。", 
+                note: "Paddington 站是經典地標，若有時間可找尋帕丁頓熊雕像。", 
+                links: [{label: "倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/"}]
             },
             { 
-                date: "2/14 (六)", city: "倫敦", 
-                transport: "市區交通", 
-                stay: "Point A Hotel London Paddington", 
-                plan: "1. 拜訪朋友 Latifa 家 (50 Greenways)\n2. 西敏寺、國會大廈、大笨鐘、倫敦塔橋", 
-                note: "西敏寺建議預約，步行過西敏橋可拍大笨鐘全景。", 
-                links: [{ label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/" }] 
+                date: "2/15 (日)", city: "冰島", transport: "LHR->KEF 13:40(T5)->17:05", stay: "Hotel Von (不含早)", 
+                plan: "1. 抵達冰島，搭乘接駁前往市區。\n2. 參觀 Hallgrimskirkja 哈爾格林姆教堂。\n3. 超市 Bónus 採買未來幾天的糧食與零食。", 
+                note: "下機後風大，務必穿著防風外套。", 
+                links: []
             },
             { 
-                date: "2/15 (日)", city: "冰島", 
-                transport: "LHR -> KEF 13:40(T5) -> 17:05", 
-                stay: "Hotel Von (不含早)", 
-                plan: "1. Hallgrimskirkja 教堂\n2. 超市 Bónus 採買未來幾天糧食", 
-                note: "尚需訂購門票與交通車，下機注意保暖。", 
-                links: [] 
+                date: "2/16 (一)", city: "冰島", transport: "Local Tour", stay: "Local Tour 包含住宿", 
+                plan: "冰島 Local Tour 三天兩夜行程第一日。\n參觀南岸經典瀑布與黑沙灘。", 
+                note: "集合時間地點請見 Tour 確認信。", 
+                links: [{label: "Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18"}]
             },
             { 
-                date: "2/16 (一)", city: "冰島", 
-                transport: "Local Tour", 
-                stay: "3 Days Local Tour (含宿)", 
-                plan: "冰島 Local Tour 三天兩夜行程第一日：南岸瀑布與黑沙灘之旅。", 
-                note: "內容細節參考連結。", 
-                links: [{ label: "1. Local Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18" }] 
+                date: "2/18 (三)", city: "冰島", transport: "Back to 市區", stay: "Hotel Reykjavik Centrum (含早)", 
+                plan: "1. 結束 Tour 返回雷克雅維克。\n2. 超市 Town Market 補給。\n3. 晚上可以去 Viking Village 體驗特色風格。", 
+                note: "若有極光機率，可在市區追逐極光。", 
+                links: []
             },
             { 
-                date: "2/17 (二)", city: "冰島", 
-                transport: "Local Tour", 
-                stay: "3 Days Local Tour (含宿)", 
-                plan: "冰島 Local Tour 三天兩夜行程第二日：冰川健行與冰洞探險。", 
-                note: "住宿已含在 Tour 費用內。", 
-                links: [{ label: "1. Local Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18" }] 
+                date: "2/19 (四)", city: "冰島", transport: "接駁車", stay: "Hotel Reykjavik Centrum", 
+                plan: "1. 專屬藍湖溫泉 (Blue Lagoon) 行程。\n2. 全程放鬆泡湯，體驗矽泥面膜。", 
+                note: "藍湖需提早預約，泡湯前記得抹護髮乳保護頭髮。", 
+                links: [{label: "Blue Lagoon 預約官網", url: "https://www.bluelagoon.com/"}]
             },
             { 
-                date: "2/18 (三)", city: "冰島", 
-                transport: "Back to 雷克雅維克", 
-                stay: "Hotel Reykjavik Centrum (含早)", 
-                plan: "1. 超市 Town Market\n2. Blue Lagoon 藍湖溫泉\n3. Viking Village 晚餐", 
-                note: "首推 Viking Village，需搭公車或自駕(約38分)。", 
-                links: [{ label: "1. Blue Lagoon 預約官網", url: "https://www.bluelagoon.com/" }] 
+                date: "2/22 (日)", city: "倫敦", transport: "市區交通", stay: "Point A Kings Cross", 
+                plan: "文化大日：\n1. 10:00 大英博物館 (建議後門進入)。\n2. 重點看羅塞塔石碑與木乃伊展區。\n3. 19:30 歌劇魅影 (His Majesty's Theatre)。", 
+                note: "大英博建議至少留 3-4 小時。劇院需提早入場。", 
+                links: []
             },
             { 
-                date: "2/19 (四)", city: "冰島", 
-                transport: "市區交通", 
-                stay: "Hotel Reykjavik Centrum", 
-                plan: "1. 雷克雅維克市區巡禮\n2. 餐廳：Old Iceland 或 Three coats", 
-                note: "飯店對面有超市可補給。", 
-                links: [] 
+                date: "2/27 (五)", city: "阿姆", transport: "Eurostar 11:04->16:20", stay: "Hotel Estheréa", 
+                plan: "1. 跨國火車前往荷蘭。\n2. 紅燈區秘密博物館參觀。\n3. Casa Rosso 成人秀體驗。", 
+                note: "飯店位於運河中心，環境優雅。", 
+                links: [{label: "Casa Rosso 官網", url: "https://www.casarosso.nl/"}]
             },
             { 
-                date: "2/20 (五)", city: "冰島", 
-                transport: "市區活動", 
-                stay: "Hotel Reykjavik Centrum", 
-                plan: "1. 訂位餐廳 Fjörukráin\n2. 自由時間補齊景點或極光行程", 
-                note: "最後一晚冰島，建議提前訂位餐廳。", 
-                links: [{ label: "1. Fjörukráin 餐廳訂位", url: "https://bookings.dineout.is/fjorukrain?do_referrer=OcjATyyurm&lng=zh-TW" }] 
-            },
-            { 
-                date: "2/21 (六)", city: "倫敦", 
-                transport: "KEF -> LHR 11:55 -> 15:05(T5)", 
-                stay: "Point A Hotel Kings Cross", 
-                plan: "飛回倫敦，入住 Kings Cross 附近飯店休息、晚餐。", 
-                note: "Kings Cross 附近有 9 3/4 月台可以拍照。", 
-                links: [] 
-            },
-            { 
-                date: "2/22 (日)", city: "倫敦", 
-                transport: "市區交通", 
-                stay: "Point A Hotel Kings Cross", 
-                plan: "牛津一日遊：\n1. Radcliffe Camera 圓形圖書館\n2. 嘆息橋\n3. Christ Church (哈利波特餐廳)", 
-                note: "車站走至大學約 15 分鐘，學院散落各處。", 
-                links: [] 
-            },
-            { 
-                date: "2/23 (一)", city: "倫敦", 
-                transport: "市區交通", 
-                stay: "Point A Hotel Kings Cross", 
-                plan: "1. 白金漢宮衛兵交接(11:00)\n2. 皇家馬廄\n3. SOHO / Piccadilly Circus / 波羅市場\n4. Genting Casino Chinatown", 
-                note: "衛兵交接建議 10 點前卡位，波羅市場必吃手撕豬肉三明治。", 
-                links: [{ label: "1. 皇家馬廄資訊", url: "https://flybyfantasy.com/london-tourist-spot/the-royal-mews/" }] 
-            },
-            { 
-                date: "2/27 (五)", city: "阿姆", 
-                transport: "Eurostar 11:04 -> 16:20", 
-                stay: "Hotel Estheréa", 
-                plan: "1. 紅燈區秘密博物館\n2. Casa Rosso 成人秀 (65歐)", 
-                note: "歐洲之星從 St Pancras 車站出發。", 
-                links: [{ label: "1. Casa Rosso 官網", url: "https://www.casarosso.nl/" }] 
-            },
-            { 
-                date: "2/28 (六)", city: "阿姆", 
-                transport: "市區交通", 
-                stay: "Hotel Estheréa", 
-                plan: "1. 水壩廣場、運河遊船、安妮之家\n2. 海尼根博物館、梵谷博物館", 
-                note: "安妮之家需提前數月預訂，飯店位於運河中心。", 
-                links: [] 
-            },
-            { 
-                date: "3/1 (日)", city: "返台", 
-                transport: "AMS -> TW 20:05 -> 15:45", 
-                stay: "機上", 
-                plan: "1. A'DAM Tower\n2. 大麻博物館", 
-                note: "生存成功！回台灣拉！提早 3 小時抵達機場。", 
-                links: [] 
+                date: "3/1 (日)", city: "返台", transport: "AMS->TW 20:05->15:45", stay: "機上", 
+                plan: "1. A'DAM Tower 俯瞰城市。\n2. 大麻博物館巡禮。\n3. 前往史基浦機場搭機。", 
+                note: "生存成功！回台灣拉！", 
+                links: []
             }
         ];
 
-        function init() {
-            const listContainer = document.getElementById('list-container');
-            listContainer.innerHTML = travelData.map((item, index) => `
-                <div onclick="showDetail(${index})" class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:bg-gray-50 transition-all">
+        // 渲染行程列表
+        function renderDailyList() {
+            const container = document.getElementById('tab-daily');
+            container.innerHTML = travelData.map((item, index) => `
+                <div onclick="openDetail(${index})" class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:bg-gray-100 transition-all">
                     <div class="flex items-center space-x-4">
-                        <div class="text-center bg-indigo-50 w-16 py-2 rounded-xl">
+                        <div class="text-center bg-indigo-50 w-16 py-2 rounded-xl border border-indigo-100">
                             <span class="block text-[10px] text-indigo-400 font-bold uppercase">${item.city}</span>
                             <span class="block text-sm font-black text-indigo-700">${item.date.split(' ')[0]}</span>
                         </div>
-                        <h3 class="font-bold text-slate-800 text-sm truncate w-40 text-left">${item.plan.split('\n')[0]}</h3>
+                        <h3 class="font-bold text-slate-800 text-sm truncate w-40">${item.plan.split('\n')[0]}</h3>
                     </div>
                     <i class="fas fa-chevron-right text-slate-200"></i>
                 </div>
             `).join('');
         }
 
-        function showDetail(index) {
+        // 分頁切換
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active-nav', 'text-slate-400'));
+            document.querySelectorAll('nav button').forEach(el => el.classList.add('text-slate-400'));
+
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('nav-' + tabName).classList.add('active-nav');
+            document.getElementById('nav-' + tabName).classList.remove('text-slate-400');
+        }
+
+        // 詳情頁控制
+        function openDetail(index) {
             const item = travelData[index];
+            const detailPage = document.getElementById('detail-page');
             document.getElementById('detail-date').innerText = item.date;
             document.getElementById('detail-content').innerHTML = `
                 <div class="space-y-6 text-left">
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">航班 / 火車</label>
-                        <div class="text-sm text-slate-700 font-semibold bg-indigo-50/50 p-3 rounded-xl"><i class="fas fa-route mr-2 text-indigo-500"></i>${item.transport}</div></section>
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">住宿資訊</label>
-                        <div class="text-sm text-slate-700 font-semibold bg-emerald-50/50 p-3 rounded-xl"><i class="fas fa-hotel mr-2 text-emerald-500"></i>${item.stay}</div></section>
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">每日行程內容</label>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-sm text-slate-600 leading-relaxed whitespace-pre-wrap text-left">${item.plan}</div></section>
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">重要備註</label>
-                        <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100 text-sm text-amber-800 italic text-left">${item.note}</div></section>
-                </div>
-            `;
-            const linksContainer = document.getElementById('links-container');
-            if (item.links && item.links.length > 0) {
-                linksContainer.innerHTML = `<label class="text-[10px] font-black text-slate-300 uppercase block mb-3 tracking-widest text-center">參考連結 (點選開啟)</label>` + 
-                item.links.map(link => `
-                    <a href="${link.url}" target="_blank" class="flex items-center justify-between bg-indigo-900 text-white px-5 py-4 rounded-2xl font-bold shadow-md active:bg-indigo-800 mb-2">
-                        <span class="text-sm text-left">${link.label}</span>
-                        <i class="fas fa-external-link-alt text-xs text-indigo-300"></i>
-                    </a>
-                `).join('');
-            } else { linksContainer.innerHTML = ''; }
-            const detailPage = document.getElementById('detail-page');
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">航班 / 火車</label>
+                        <div class="text-sm font-semibold bg-indigo-50/50 p-3 rounded-xl"><i class="fas fa-route mr-2 text-indigo-500"></i>${item.transport}</div></section>
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">住宿資訊</label>
+                        <div class="text-sm font-semibold bg-emerald-50/50 p-3 rounded-xl"><i class="fas fa-hotel mr-2 text-emerald-500"></i>${item.stay}</div></section>
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">每日行程</label>
+                        <div class="bg-slate-50 p-4 rounded-2xl border text-sm text-slate-600 whitespace-pre-wrap">${item.plan}</div></section>
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">重要備註</label>
+                        <div class="bg-amber-50 p-4 rounded-2xl border text-sm text-amber-800 italic">${item.note}</div></section>
+                </div>`;
+            
+            const linkBox = document.getElementById('links-container');
+            linkBox.innerHTML = item.links.length > 0 ? `<label class="text-[10px] font-black text-slate-300 uppercase block mb-3 text-center">相關連結</label>` + 
+                item.links.map(l => `<a href="${l.url}" target="_blank" class="flex items-center justify-between bg-indigo-900 text-white px-5 py-4 rounded-2xl font-bold shadow-md active:scale-95 transition-transform"><span class="text-sm">${l.label}</span><i class="fas fa-external-link-alt text-xs text-indigo-300"></i></a>`).join('') : '';
+
             detailPage.classList.remove('slide-out');
-            detailPage.classList.add('slide-in');
         }
 
         function closeDetail() {
-            const detailPage = document.getElementById('detail-page');
-            detailPage.classList.remove('slide-in');
-            detailPage.classList.add('slide-out');
+            document.getElementById('detail-page').classList.add('slide-out');
         }
+
+        // 手勢右滑返回功能
+        let touchstartX = 0;
+        let touchendX = 0;
+        const detailPage = document.getElementById('detail-page');
+
+        detailPage.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+        detailPage.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            if (touchendX - touchstartX > 100) closeDetail();
+        });
+
+        init = () => { renderDailyList(); };
         init();
     </script>
 </body>
