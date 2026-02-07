@@ -16,6 +16,8 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .active-nav { color: #4f46e5; }
+        /* 增加平滑滾動與 iOS 彈性效果 */
+        .scroll-container { -webkit-overflow-scrolling: touch; }
     </style>
 </head>
 <body class="bg-gray-50 overflow-hidden text-slate-900">
@@ -28,37 +30,43 @@
 
         <main class="flex-1 overflow-hidden relative">
             
-            <section id="tab-daily" class="tab-content active h-full overflow-y-auto p-4 pb-24 space-y-3">
-                </section>
+            <section id="tab-daily" class="tab-content active h-full overflow-y-auto p-4 pb-28 space-y-3 scroll-container"></section>
 
-            <section id="tab-stays" class="tab-content h-full overflow-y-auto p-4 pb-24 space-y-4">
-                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                    <h3 class="font-bold text-indigo-900 mb-2">倫敦 London</h3>
-                    <p class="text-sm text-slate-600">2/13-2/15: Point A Hotel Paddington</p>
-                    <p class="text-sm text-slate-600">2/21-2/27: Point A Hotel Kings Cross</p>
+            <section id="tab-stays" class="tab-content h-full overflow-y-auto p-4 pb-28 space-y-4 scroll-container text-left">
+                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-indigo-900 mb-3 underline decoration-indigo-200">倫敦 London</h3>
+                    <p class="text-sm text-slate-600 mb-2 font-medium">● 2/13 - 2/15 (2晚)<br>Point A Hotel London Paddington</p>
+                    <p class="text-sm text-slate-600 font-medium">● 2/21 - 2/27 (6晚)<br>Point A Hotel London Kings Cross</p>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                    <h3 class="font-bold text-indigo-900 mb-2">冰島 Iceland</h3>
-                    <p class="text-sm text-slate-600">2/15, 2/18-2/21: Hotel Von / Centrum</p>
-                    <p class="text-sm text-slate-600">2/16-2/17: Local Tour 包含住宿</p>
+                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-indigo-900 mb-3 underline decoration-indigo-200">冰島 Iceland</h3>
+                    <p class="text-sm text-slate-600 mb-2 font-medium">● 2/15 - 2/16 (1晚)<br>Hotel Von</p>
+                    <p class="text-sm text-slate-600 mb-2 font-medium">● 2/16 - 2/18 (2晚)<br>Local Tour 包含住宿</p>
+                    <p class="text-sm text-slate-600 font-medium">● 2/18 - 2/21 (3晚)<br>Hotel Reykjavik Centrum</p>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                    <h3 class="font-bold text-indigo-900 mb-2">荷蘭 Amsterdam</h3>
-                    <p class="text-sm text-slate-600">2/27-3/01: Hotel Estheréa</p>
+                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-indigo-900 mb-3 underline decoration-indigo-200">荷蘭 Amsterdam</h3>
+                    <p class="text-sm text-slate-600 font-medium">● 2/27 - 3/01 (2晚)<br>Hotel Estheréa</p>
                 </div>
             </section>
 
-            <section id="tab-notes" class="tab-content h-full overflow-y-auto p-4 pb-24 space-y-6">
-                <div class="space-y-2">
-                    <h3 class="font-bold text-indigo-600 border-l-4 border-indigo-600 pl-2">大英博物館必看</h3>
-                    <p class="text-xs text-slate-500 italic">羅塞塔石碑 (Room 4)、帕德嫩神廟 (Room 18)、埃及木乃伊 (Room 62-63)、復活節島摩艾石像 (Room 24)。</p>
+            <section id="tab-notes" class="tab-content h-full overflow-y-auto p-6 pb-28 space-y-8 scroll-container text-left">
+                <div>
+                    <h3 class="font-bold text-indigo-600 border-l-4 border-indigo-600 pl-3 mb-3 uppercase text-xs tracking-widest">大英博物館必看清單</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed bg-indigo-50/50 p-3 rounded-xl">
+                        1. 羅塞塔石碑 (Rosetta Stone) - Room 4<br>
+                        2. 帕德嫩神廟大理石 - Room 18<br>
+                        3. 埃及木乃伊展區 - Room 62-63<br>
+                        4. 摩艾石像 (Moai) - Room 24<br>
+                        5. 路易斯棋子 (Lewis Chessmen) - Room 40
+                    </p>
                 </div>
-                <div class="space-y-2">
-                    <h3 class="font-bold text-indigo-600 border-l-4 border-indigo-600 pl-2">生活小知識</h3>
-                    <ul class="text-sm text-slate-600 list-disc list-inside space-y-1">
-                        <li>倫敦自助洗衣：6kg/£6, 烘乾半小時/£3。</li>
-                        <li>冰島藍湖必抹護髮乳，避免髮質乾澀。</li>
-                        <li>荷蘭安妮之家需提前 6 週預約。</li>
+                <div>
+                    <h3 class="font-bold text-indigo-600 border-l-4 border-indigo-600 pl-3 mb-3 uppercase text-xs tracking-widest">生活實用資訊</h3>
+                    <ul class="text-sm text-slate-600 space-y-3">
+                        <li class="bg-slate-50 p-3 rounded-xl">🧺 <span class="font-bold">倫敦洗衣：</span> 自助洗衣店 6kg/£6，烘乾 30min/£3。</li>
+                        <li class="bg-slate-50 p-3 rounded-xl">💧 <span class="font-bold">冰島溫泉：</span> 藍湖溫泉水質易乾，務必厚塗護髮乳。</li>
+                        <li class="bg-slate-50 p-3 rounded-xl">🎟️ <span class="font-bold">荷蘭預約：</span> 安妮之家與梵谷博物館須在 6 週前搶票。</li>
                     </ul>
                 </div>
             </section>
@@ -71,13 +79,13 @@
                 </button>
                 <h2 id="detail-date" class="ml-4 font-bold text-slate-800 text-lg">日期詳情</h2>
             </header>
-            <main class="flex-1 overflow-y-auto p-6 space-y-6">
+            <main class="flex-1 overflow-y-auto p-6 space-y-8 scroll-container">
                 <div id="detail-content"></div>
-                <div id="links-container" class="space-y-3"></div>
+                <div id="links-container" class="space-y-3 pt-4"></div>
             </main>
         </div>
 
-        <nav class="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t flex justify-around p-3 pb-6 z-20">
+        <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t flex justify-around p-3 pb-8 z-20">
             <button onclick="switchTab('daily')" id="nav-daily" class="flex flex-col items-center active-nav">
                 <i class="fas fa-calendar-alt text-xl"></i><span class="text-[10px] mt-1 font-bold">行程表</span>
             </button>
@@ -92,63 +100,32 @@
 
     <script>
         const travelData = [
-            { 
-                date: "2/13 (五)", city: "倫敦", transport: "TWN->LHR 8:40(T1)->16:55(T3)", stay: "Point A Paddington", 
-                plan: "1. 希斯洛機場快線往市區。\n2. 晚餐建議：車站買 Sainsbury's / Marks＆Spencer 套餐，或樓上 Leon 輕食。\n3. 晚上賭場規劃：Grosvenor Casino (The Victoria)。", 
-                note: "Paddington 站是經典地標，若有時間可找尋帕丁頓熊雕像。", 
-                links: [{label: "倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/"}]
-            },
-            { 
-                date: "2/15 (日)", city: "冰島", transport: "LHR->KEF 13:40(T5)->17:05", stay: "Hotel Von (不含早)", 
-                plan: "1. 抵達冰島，搭乘接駁前往市區。\n2. 參觀 Hallgrimskirkja 哈爾格林姆教堂。\n3. 超市 Bónus 採買未來幾天的糧食與零食。", 
-                note: "下機後風大，務必穿著防風外套。", 
-                links: []
-            },
-            { 
-                date: "2/16 (一)", city: "冰島", transport: "Local Tour", stay: "Local Tour 包含住宿", 
-                plan: "冰島 Local Tour 三天兩夜行程第一日。\n參觀南岸經典瀑布與黑沙灘。", 
-                note: "集合時間地點請見 Tour 確認信。", 
-                links: [{label: "Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18"}]
-            },
-            { 
-                date: "2/18 (三)", city: "冰島", transport: "Back to 市區", stay: "Hotel Reykjavik Centrum (含早)", 
-                plan: "1. 結束 Tour 返回雷克雅維克。\n2. 超市 Town Market 補給。\n3. 晚上可以去 Viking Village 體驗特色風格。", 
-                note: "若有極光機率，可在市區追逐極光。", 
-                links: []
-            },
-            { 
-                date: "2/19 (四)", city: "冰島", transport: "接駁車", stay: "Hotel Reykjavik Centrum", 
-                plan: "1. 專屬藍湖溫泉 (Blue Lagoon) 行程。\n2. 全程放鬆泡湯，體驗矽泥面膜。", 
-                note: "藍湖需提早預約，泡湯前記得抹護髮乳保護頭髮。", 
-                links: [{label: "Blue Lagoon 預約官網", url: "https://www.bluelagoon.com/"}]
-            },
-            { 
-                date: "2/22 (日)", city: "倫敦", transport: "市區交通", stay: "Point A Kings Cross", 
-                plan: "文化大日：\n1. 10:00 大英博物館 (建議後門進入)。\n2. 重點看羅塞塔石碑與木乃伊展區。\n3. 19:30 歌劇魅影 (His Majesty's Theatre)。", 
-                note: "大英博建議至少留 3-4 小時。劇院需提早入場。", 
-                links: []
-            },
-            { 
-                date: "2/27 (五)", city: "阿姆", transport: "Eurostar 11:04->16:20", stay: "Hotel Estheréa", 
-                plan: "1. 跨國火車前往荷蘭。\n2. 紅燈區秘密博物館參觀。\n3. Casa Rosso 成人秀體驗。", 
-                note: "飯店位於運河中心，環境優雅。", 
-                links: [{label: "Casa Rosso 官網", url: "https://www.casarosso.nl/"}]
-            },
-            { 
-                date: "3/1 (日)", city: "返台", transport: "AMS->TW 20:05->15:45", stay: "機上", 
-                plan: "1. A'DAM Tower 俯瞰城市。\n2. 大麻博物館巡禮。\n3. 前往史基浦機場搭機。", 
-                note: "生存成功！回台灣拉！", 
-                links: []
-            }
+            { date: "2/13 (五)", city: "倫敦", transport: "TWN -> LHR 8:40(T1) -> 16:55(T3)", stay: "Point A Hotel Paddington", plan: "1. 抵達倫敦，搭乘希斯洛機場快線往市區。\n2. 車站買 Sainsbury's / Marks＆Spencer 套餐或 Leon。\n3. 晚間可去 Grosvenor Casino (The Victoria) 感受氣氛。", note: "Paddington 站是經典地標，可以找尋帕丁頓熊雕像。", links: [{label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/"}] },
+            { date: "2/14 (六)", city: "倫敦", transport: "市區交通 / 步行", stay: "Point A Hotel Paddington", plan: "1. 拜訪朋友 Latifa 家 (Beckenham)。\n2. 市區觀光：西敏寺、國會大廈、大笨鐘、倫敦塔橋。", note: "建議預約西敏寺門票。過西敏橋可以拍到大笨鐘全景。", links: [] },
+            { date: "2/15 (日)", city: "冰島", transport: "LHR -> KEF 13:40(T5) -> 17:05", stay: "Hotel Von (不含早)", plan: "1. 抵達冰島，搭乘接駁前往雷克雅維克市區。\n2. 參觀哈爾格林姆教堂 (Hallgrimskirkja)。\n3. 超市 Bónus 採買未來幾天糧食。", note: "下機後注意保暖。尚需預訂門票與交通車。", links: [] },
+            { date: "2/16 (一)", city: "冰島", transport: "Local Tour 接送", stay: "Local Tour 包含住宿", plan: "冰島三日團 Day 1：\n南岸之旅、塞里雅蘭瀑布、斯科加爾瀑布、黑沙灘。", note: "集合時間與地點詳見 Tour 確認信。", links: [{label: "1. Local Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18"}] },
+            { date: "2/17 (二)", city: "冰島", transport: "Local Tour 巴士", stay: "Local Tour 包含住宿", plan: "冰島三日團 Day 2：\n冰川健行、冰洞探險、傑古沙龍冰河湖、鑽石海灘。", note: "建議穿著硬底登山鞋，需體力活動。", links: [] },
+            { date: "2/18 (三)", city: "冰島", transport: "Tour 巴士 -> 市區", stay: "Hotel Reykjavik Centrum", plan: "1. 結束三日團返回市區。\n2. 超市 Town Market 補給。\n3. Viking Village 或 Old Iceland 晚餐。", note: "首推 Viking Village，需搭公車或自駕約 38 分鐘。", links: [] },
+            { date: "2/19 (四)", city: "冰島", transport: "接駁車", stay: "Hotel Reykjavik Centrum", plan: "1. 專屬藍湖溫泉 (Blue Lagoon) 行程。\n2. 全程放鬆泡湯，敷矽泥面膜。\n3. 傍晚回到市區自由活動。", note: "藍湖需提早預約，泡湯前記得厚塗護髮乳。", links: [{label: "1. Blue Lagoon 預約官網", url: "https://www.bluelagoon.com/"}] },
+            { date: "2/20 (五)", city: "冰島", transport: "市區交通 / 步行", stay: "Hotel Reykjavik Centrum", plan: "1. 雷克雅維克市區深度遊、買紀念品。\n2. 餐廳預約：Old Iceland 或 Three coats 或 Fjörukráin。", note: "最後一晚冰島。建議提前預約熱門餐廳。", links: [{label: "1. Fjörukráin 餐廳訂位", url: "https://bookings.dineout.is/fjorukrain?do_referrer=OcjATyyurm&lng=zh-TW"}] },
+            { date: "2/21 (六)", city: "倫敦", transport: "KEF -> LHR 11:55 -> 15:05(T5)", stay: "Point A Hotel Kings Cross", plan: "1. 搭機飛回倫敦。\n2. 前往 Kings Cross 區入住飯店。\n3. 飯店附近晚餐、休息。", note: "飯店洗衣較貴，建議外找自助洗衣店。", links: [] },
+            { date: "2/22 (日)", city: "倫敦", transport: "地鐵 / 步行", stay: "Point A Hotel Kings Cross", plan: "1. 大英博物館 (10:00-17:00)。\n2. 柯芬園散步、聖詹姆斯公園、白金漢宮周邊。\n3. 19:30 欣賞音樂劇《歌劇魅影》。", note: "大英博門票需預約。劇院建議提前 30 分鐘入場。", links: [] },
+            { date: "2/23 (一)", city: "倫敦", transport: "地鐵 / 步行", stay: "Point A Hotel Kings Cross", plan: "1. 白金漢宮衛兵交接 (11:00)。\n2. 參觀皇家馬廄 (The Royal Mews)。\n3. SOHO / Piccadilly Circus / 波羅市場。", note: "衛兵交接要早點去卡位。波羅市場手撕豬三明治推薦。", links: [{label: "1. 皇家馬廄資訊參考", url: "https://flybyfantasy.com/london-tourist-spot/the-royal-mews/"}] },
+            { date: "2/24 (二)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel Kings Cross", plan: "1. King's Cross 9 3/4 月台拍照。\n2. Coal Drop Yard 逛街購物。\n3. 格林威治天文台與泰晤士河遊船 (視體力)。", note: "Coal Drop Yard 是廢棄卸煤場改建，建築很有特色。", links: [] },
+            { date: "2/25 (三)", city: "倫敦", transport: "火車 / 市區交通", stay: "Point A Hotel Kings Cross", plan: "1. 劍橋大學一日遊或牛津大學一日遊。\n2. 傍晚回到市區進行洗衣與採買補遺。", note: "自助洗衣店洗 6kg 約 6 鎊，烘乾 3 鎊。", links: [] },
+            { date: "2/26 (四)", city: "倫敦", transport: "地鐵 / 雙層巴士", stay: "Point A Hotel Kings Cross", plan: "1. 倫敦塔橋內部參觀。\n2. 攝政街、牛津街最後採買。\n3. 整理行李，準備隔日出發荷蘭。", note: "倫敦最後一整天，享受都市氛圍。", links: [] },
+            { date: "2/27 (五)", city: "阿姆", transport: "Eurostar 11:04 -> 16:20", stay: "Hotel Estheréa", plan: "1. 跨國火車前往阿姆斯特丹。\n2. 入住運河區飯店。\n3. 紅燈區秘密博物館、Casa Rosso 成人秀 (65歐)。", note: "歐洲之星 St Pancras 出發，需提前 90 分鐘報到。", links: [{label: "1. Casa Rosso 官網", url: "https://www.casarosso.nl/"}] },
+            { date: "2/28 (六)", city: "阿姆", transport: "電車 / 步行", stay: "Hotel Estheréa", plan: "1. 水壩廣場、運河遊船。\n2. 安妮之家 (Anne Frank House)。\n3. 海尼根博物館、梵谷博物館。", note: "安妮之家預約非常困難，請務必提早。", links: [] },
+            { date: "3/1 (日)", city: "返台", transport: "AMS -> TW 20:05 -> 15:45", stay: "機上", plan: "1. A'DAM Tower 俯瞰阿姆斯特丹。\n2. 大麻博物館、購入荷蘭鬆餅等伴手禮。\n3. 前往史基浦機場搭機。", note: "生存成功！回台灣拉！提早 3 小時抵達機場。", links: [] }
         ];
 
-        // 渲染行程列表
+        // 渲染列表
         function renderDailyList() {
             const container = document.getElementById('tab-daily');
             container.innerHTML = travelData.map((item, index) => `
-                <div onclick="openDetail(${index})" class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:bg-gray-100 transition-all">
+                <div onclick="openDetail(${index})" class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:bg-gray-50 transition-all text-left">
                     <div class="flex items-center space-x-4">
-                        <div class="text-center bg-indigo-50 w-16 py-2 rounded-xl border border-indigo-100">
+                        <div class="text-center bg-indigo-50 w-16 py-2 rounded-xl">
                             <span class="block text-[10px] text-indigo-400 font-bold uppercase">${item.city}</span>
                             <span class="block text-sm font-black text-indigo-700">${item.date.split(' ')[0]}</span>
                         </div>
@@ -162,18 +139,16 @@
         // 分頁切換
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active-nav', 'text-slate-400'));
-            document.querySelectorAll('nav button').forEach(el => el.classList.add('text-slate-400'));
-
+            document.querySelectorAll('nav button').forEach(el => { el.classList.remove('active-nav'); el.classList.add('text-slate-400'); });
+            
             document.getElementById('tab-' + tabName).classList.add('active');
             document.getElementById('nav-' + tabName).classList.add('active-nav');
             document.getElementById('nav-' + tabName).classList.remove('text-slate-400');
         }
 
-        // 詳情頁控制
+        // 詳情控制
         function openDetail(index) {
             const item = travelData[index];
-            const detailPage = document.getElementById('detail-page');
             document.getElementById('detail-date').innerText = item.date;
             document.getElementById('detail-content').innerHTML = `
                 <div class="space-y-6 text-left">
@@ -182,35 +157,45 @@
                     <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">住宿資訊</label>
                         <div class="text-sm font-semibold bg-emerald-50/50 p-3 rounded-xl"><i class="fas fa-hotel mr-2 text-emerald-500"></i>${item.stay}</div></section>
                     <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">每日行程</label>
-                        <div class="bg-slate-50 p-4 rounded-2xl border text-sm text-slate-600 whitespace-pre-wrap">${item.plan}</div></section>
+                        <div class="bg-slate-50 p-4 rounded-2xl border text-sm text-slate-600 whitespace-pre-wrap leading-relaxed">${item.plan}</div></section>
                     <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">重要備註</label>
                         <div class="bg-amber-50 p-4 rounded-2xl border text-sm text-amber-800 italic">${item.note}</div></section>
                 </div>`;
             
             const linkBox = document.getElementById('links-container');
-            linkBox.innerHTML = item.links.length > 0 ? `<label class="text-[10px] font-black text-slate-300 uppercase block mb-3 text-center">相關連結</label>` + 
+            linkBox.innerHTML = item.links.length > 0 ? `<label class="text-[10px] font-black text-slate-300 uppercase block mb-3 text-center">相關網頁連結</label>` + 
                 item.links.map(l => `<a href="${l.url}" target="_blank" class="flex items-center justify-between bg-indigo-900 text-white px-5 py-4 rounded-2xl font-bold shadow-md active:scale-95 transition-transform"><span class="text-sm">${l.label}</span><i class="fas fa-external-link-alt text-xs text-indigo-300"></i></a>`).join('') : '';
 
-            detailPage.classList.remove('slide-out');
+            document.getElementById('detail-page').classList.remove('slide-out');
         }
 
         function closeDetail() {
             document.getElementById('detail-page').classList.add('slide-out');
         }
 
-        // 手勢右滑返回功能
+        // --- 手勢返回功能 (iOS 必備) ---
         let touchstartX = 0;
         let touchendX = 0;
         const detailPage = document.getElementById('detail-page');
 
-        detailPage.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+        detailPage.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        }, false);
+
         detailPage.addEventListener('touchend', e => {
             touchendX = e.changedTouches[0].screenX;
-            if (touchendX - touchstartX > 100) closeDetail();
-        });
+            handleGesture();
+        }, false);
 
-        init = () => { renderDailyList(); };
-        init();
+        function handleGesture() {
+            // 如果右滑超過 100 像素，則返回
+            if (touchendX - touchstartX > 100) {
+                closeDetail();
+            }
+        }
+
+        // 初始化
+        window.onload = () => { renderDailyList(); };
     </script>
 </body>
 </html>
