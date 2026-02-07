@@ -21,7 +21,8 @@
         <header class="bg-indigo-950 text-white p-6 pt-12 shadow-lg text-center font-bold">
             <h1 class="text-lg uppercase tracking-wider">歐洲旅行 UK -> IceLand -> Netherland</h1>
         </header>
-        <main id="list-container" class="flex-1 overflow-y-auto p-4 space-y-3"></main>
+        <main id="list-container" class="flex-1 overflow-y-auto p-4 space-y-3">
+            </main>
     </div>
 
     <div id="detail-page" class="fixed inset-0 max-w-md mx-auto bg-white z-20 page-transition slide-out shadow-2xl flex flex-col">
@@ -29,7 +30,7 @@
             <button onclick="closeDetail()" class="p-2 text-slate-600 active:bg-gray-200 rounded-full">
                 <i class="fas fa-arrow-left text-xl"></i>
             </button>
-            <h2 id="detail-date" class="ml-4 font-bold text-lg text-slate-800">日期詳情</h2>
+            <h2 id="detail-date" class="ml-4 font-bold text-lg text-slate-800">詳細資訊</h2>
         </header>
         <main class="flex-1 overflow-y-auto p-6 space-y-6">
             <div id="detail-content"></div>
@@ -39,26 +40,124 @@
 
     <script>
         const travelData = [
-            { date: "2/13 (五)", city: "倫敦", transport: "TWN->LHR 8:40(T1)->16:55(T3)", stay: "Point A Paddington", plan: "1. 希斯洛機場快線\n2. 車站套餐或 Leon\n3. 賭場 Grosvenor Casino", note: "Paddington Bear 名稱源自於此。", links: [{ label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/" }, { label: "2. 飯店位置", url: "https://maps.app.goo.gl/ak5JZuNuAsrRM3Q48" }] },
-            { date: "2/14 (六)", city: "倫敦", transport: "市區交通", stay: "Point A Paddington", plan: "1. 拜訪朋友 Latifa (Beckenham)\n2. 西敏寺、大笨鐘、塔橋", note: "建議預訂西敏寺門票。", links: [{ label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/" }] },
-            { date: "2/15 (日)", city: "冰島", transport: "LHR->KEF 13:40(T5)->17:05", stay: "Hotel Von (不含早)", plan: "1. Hallgrimskirkja 教堂\n2. 超市 Bónus 採買", note: "下機後注意保暖。", links: [{ label: "1. 超市位置", url: "https://maps.app.goo.gl/bCLQyB3sjF5vuund7" }, { label: "2. 飯店位置", url: "https://maps.app.goo.gl/e6PgwZnsWJUvrHCH9" }] },
-            { date: "2/16 (一)", city: "冰島", transport: "Local Tour", stay: "3 Days Local tour (含宿)", plan: "冰島三日團 Day 1", note: "詳情見連結。", links: [{ label: "1. Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18" }] },
-            { date: "2/17 (二)", city: "冰島", transport: "Local Tour", stay: "3 Days Local tour (含宿)", plan: "冰島三日團 Day 2", note: "冰川健行需體力。", links: [{ label: "1. Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18" }] },
-            { date: "2/18 (三)", city: "冰島", transport: "Back to 市區", stay: "Hotel Reykjavik Centrum (含早)", plan: "1. 超市 Town Market\n2. 藍湖溫泉 (Blue Lagoon)", note: "藍湖需提早預約。", links: [{ label: "1. 超市位置", url: "https://maps.app.goo.gl/fteqttkEzpcWw6Xr9" }, { label: "2. 飯店位置", url: "https://maps.app.goo.gl/V5JfSQJZbRMHnGnz7" }] },
-            { date: "2/19 (四)", city: "冰島", transport: "市區交通", stay: "Hotel Reykjavik Centrum", plan: "1. 雷克雅維克市區活動\n2. 餐廳：Viking Village 或 Old Iceland", note: "Viking Village 需搭公車或自駕。", links: [{ label: "1. 藍湖預約連結", url: "https://www.bluelagoon.com/" }, { label: "2. 餐廳訂位", url: "https://bookings.dineout.is/fjorukrain?do_referrer=OcjATyyurm&lng=zh-TW" }] },
-            { date: "2/20 (五)", city: "冰島", transport: "市區活動", stay: "Hotel Reykjavik Centrum", plan: "市區深度遊 / 買紀念品 / 極光補完", note: "最後一晚在冰島。", links: [{ label: "1. 餐廳地圖(Old Iceland)", url: "https://maps.app.goo.gl/zjBCPsMom47zuVCH9?g_st=ic" }, { label: "2. 餐廳地圖(Three Coats)", url: "https://maps.app.goo.gl/6RtuNiktfU8Wspwf9?g_st=ic" }, { label: "3. 餐廳(Fjörukráin)", url: "https://bookings.dineout.is/fjorukrain?do_referrer=OcjATyyurm&lng=zh-TW" }] },
-            { date: "2/21 (六)", city: "倫敦", transport: "KEF->LHR 11:55->15:05(T5)", stay: "Point A Kings Cross", plan: "飛回倫敦，Kings Cross 附近休息", note: "附近有 9 3/4 月台。", links: [{ label: "1. 飯店位置", url: "https://maps.app.goo.gl/6UXAbD23WAUKioTZ7" }] },
-            { date: "2/22 (日)", city: "倫敦", transport: "市區交通", stay: "Point A Kings Cross", plan: "1. 大英博物館\n2. 歌劇魅影 (19:30 His Majesty's)", note: "大英博建議 10 點前抵達。", links: [{ label: "1. 戲院位置", url: "https://maps.app.goo.gl/eauK1RuqtqR1TAzG6" }] },
-            { date: "2/23 (一)", city: "倫敦", transport: "市區交通", stay: "Point A Kings Cross", plan: "1. 白金漢宮衛兵交接\n2. 皇家馬廄\n3. SOHO/中國城", note: "衛兵交接要早點卡位。", links: [{ label: "1. 皇家馬廄遊記", url: "https://flybyfantasy.com/london-tourist-spot/the-royal-mews/" }] },
-            { date: "2/27 (五)", city: "荷蘭", transport: "Eurostar 11:04->16:20", stay: "Hotel Estheréa", plan: "前往荷蘭，紅燈區巡禮", note: "歐洲之星 St. Pancras 出發。", links: [{ label: "1. 飯店位置", url: "https://maps.app.goo.gl/nxQeMeUzXiU2FezD7" }] },
-            { date: "2/28 (六)", city: "荷蘭", transport: "市區交通", stay: "Hotel Estheréa", plan: "1. 安妮之家、梵谷博物館\n2. 海尼根博物館"},
-            { date: "3/1 (日)", city: "返台", transport: "AMS->TW 20:05->15:45", stay: "機上", plan: "A'DAM Tower / 最後採買", note: "提早 3 小時抵機場。", links: [{ label: "1. 機場位置", url: "" }] }
+            { 
+                date: "2/13 (五)", city: "倫敦", 
+                transport: "TWN -> LHR 8:40(T1) -> 16:55(T3)", 
+                stay: "Point A Hotel London Paddington", 
+                plan: "1. 希斯洛機場快線\n2. 車站買 Sainsbury's / Marks＆Spencer 套餐，或樓上 Leon\n3. 賭場 Grosvenor Casino (The Victoria)", 
+                note: "Paddington Bear 名稱源自此，穿著厚呢風衣與長統靴是經典形象。", 
+                links: [{ label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/" }] 
+            },
+            { 
+                date: "2/14 (六)", city: "倫敦", 
+                transport: "市區交通", 
+                stay: "Point A Hotel London Paddington", 
+                plan: "1. 拜訪朋友 Latifa 家 (50 Greenways)\n2. 西敏寺、國會大廈、大笨鐘、倫敦塔橋", 
+                note: "西敏寺建議預約，步行過西敏橋可拍大笨鐘全景。", 
+                links: [{ label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/" }] 
+            },
+            { 
+                date: "2/15 (日)", city: "冰島", 
+                transport: "LHR -> KEF 13:40(T5) -> 17:05", 
+                stay: "Hotel Von (不含早)", 
+                plan: "1. Hallgrimskirkja 教堂\n2. 超市 Bónus 採買未來幾天糧食", 
+                note: "尚需訂購門票與交通車，下機注意保暖。", 
+                links: [] 
+            },
+            { 
+                date: "2/16 (一)", city: "冰島", 
+                transport: "Local Tour", 
+                stay: "3 Days Local Tour (含宿)", 
+                plan: "冰島 Local Tour 三天兩夜行程第一日：南岸瀑布與黑沙灘之旅。", 
+                note: "內容細節參考連結。", 
+                links: [{ label: "1. Local Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18" }] 
+            },
+            { 
+                date: "2/17 (二)", city: "冰島", 
+                transport: "Local Tour", 
+                stay: "3 Days Local Tour (含宿)", 
+                plan: "冰島 Local Tour 三天兩夜行程第二日：冰川健行與冰洞探險。", 
+                note: "住宿已含在 Tour 費用內。", 
+                links: [{ label: "1. Local Tour 內容詳情", url: "https://cn.guidetoiceland.is/book-holiday-trips/jokulsarlon-lagoon-and-ice-caving-three-day-tour?adults=2&dateFrom=2026-02-16&dateTo=2026-02-18" }] 
+            },
+            { 
+                date: "2/18 (三)", city: "冰島", 
+                transport: "Back to 雷克雅維克", 
+                stay: "Hotel Reykjavik Centrum (含早)", 
+                plan: "1. 超市 Town Market\n2. Blue Lagoon 藍湖溫泉\n3. Viking Village 晚餐", 
+                note: "首推 Viking Village，需搭公車或自駕(約38分)。", 
+                links: [{ label: "1. Blue Lagoon 預約官網", url: "https://www.bluelagoon.com/" }] 
+            },
+            { 
+                date: "2/19 (四)", city: "冰島", 
+                transport: "市區交通", 
+                stay: "Hotel Reykjavik Centrum", 
+                plan: "1. 雷克雅維克市區巡禮\n2. 餐廳：Old Iceland 或 Three coats", 
+                note: "飯店對面有超市可補給。", 
+                links: [] 
+            },
+            { 
+                date: "2/20 (五)", city: "冰島", 
+                transport: "市區活動", 
+                stay: "Hotel Reykjavik Centrum", 
+                plan: "1. 訂位餐廳 Fjörukráin\n2. 自由時間補齊景點或極光行程", 
+                note: "最後一晚冰島，建議提前訂位餐廳。", 
+                links: [{ label: "1. Fjörukráin 餐廳訂位", url: "https://bookings.dineout.is/fjorukrain?do_referrer=OcjATyyurm&lng=zh-TW" }] 
+            },
+            { 
+                date: "2/21 (六)", city: "倫敦", 
+                transport: "KEF -> LHR 11:55 -> 15:05(T5)", 
+                stay: "Point A Hotel Kings Cross", 
+                plan: "飛回倫敦，入住 Kings Cross 附近飯店休息、晚餐。", 
+                note: "Kings Cross 附近有 9 3/4 月台可以拍照。", 
+                links: [] 
+            },
+            { 
+                date: "2/22 (日)", city: "倫敦", 
+                transport: "市區交通", 
+                stay: "Point A Hotel Kings Cross", 
+                plan: "牛津一日遊：\n1. Radcliffe Camera 圓形圖書館\n2. 嘆息橋\n3. Christ Church (哈利波特餐廳)", 
+                note: "車站走至大學約 15 分鐘，學院散落各處。", 
+                links: [] 
+            },
+            { 
+                date: "2/23 (一)", city: "倫敦", 
+                transport: "市區交通", 
+                stay: "Point A Hotel Kings Cross", 
+                plan: "1. 白金漢宮衛兵交接(11:00)\n2. 皇家馬廄\n3. SOHO / Piccadilly Circus / 波羅市場\n4. Genting Casino Chinatown", 
+                note: "衛兵交接建議 10 點前卡位，波羅市場必吃手撕豬肉三明治。", 
+                links: [{ label: "1. 皇家馬廄資訊", url: "https://flybyfantasy.com/london-tourist-spot/the-royal-mews/" }] 
+            },
+            { 
+                date: "2/27 (五)", city: "阿姆", 
+                transport: "Eurostar 11:04 -> 16:20", 
+                stay: "Hotel Estheréa", 
+                plan: "1. 紅燈區秘密博物館\n2. Casa Rosso 成人秀 (65歐)", 
+                note: "歐洲之星從 St Pancras 車站出發。", 
+                links: [{ label: "1. Casa Rosso 官網", url: "https://www.casarosso.nl/" }] 
+            },
+            { 
+                date: "2/28 (六)", city: "阿姆", 
+                transport: "市區交通", 
+                stay: "Hotel Estheréa", 
+                plan: "1. 水壩廣場、運河遊船、安妮之家\n2. 海尼根博物館、梵谷博物館", 
+                note: "安妮之家需提前數月預訂，飯店位於運河中心。", 
+                links: [] 
+            },
+            { 
+                date: "3/1 (日)", city: "返台", 
+                transport: "AMS -> TW 20:05 -> 15:45", 
+                stay: "機上", 
+                plan: "1. A'DAM Tower\n2. 大麻博物館", 
+                note: "生存成功！回台灣拉！提早 3 小時抵達機場。", 
+                links: [] 
+            }
         ];
 
         function init() {
             const listContainer = document.getElementById('list-container');
             listContainer.innerHTML = travelData.map((item, index) => `
-                <div onclick="showDetail(${index})" class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:bg-gray-50 transition-all text-left">
+                <div onclick="showDetail(${index})" class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between active:bg-gray-50 transition-all">
                     <div class="flex items-center space-x-4">
                         <div class="text-center bg-indigo-50 w-16 py-2 rounded-xl">
                             <span class="block text-[10px] text-indigo-400 font-bold uppercase">${item.city}</span>
@@ -75,32 +174,36 @@
             const item = travelData[index];
             document.getElementById('detail-date').innerText = item.date;
             document.getElementById('detail-content').innerHTML = `
-                <div class="space-y-6 text-left animate-in slide-in-from-right duration-300">
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">Transportation</label>
+                <div class="space-y-6 text-left">
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">航班 / 火車</label>
                         <div class="text-sm text-slate-700 font-semibold bg-indigo-50/50 p-3 rounded-xl"><i class="fas fa-route mr-2 text-indigo-500"></i>${item.transport}</div></section>
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">Stay</label>
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">住宿資訊</label>
                         <div class="text-sm text-slate-700 font-semibold bg-emerald-50/50 p-3 rounded-xl"><i class="fas fa-hotel mr-2 text-emerald-500"></i>${item.stay}</div></section>
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">Itinerary</label>
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">每日行程內容</label>
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-sm text-slate-600 leading-relaxed whitespace-pre-wrap text-left">${item.plan}</div></section>
-                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">Note</label>
+                    <section><label class="text-[10px] font-black text-indigo-300 uppercase block mb-1 tracking-widest text-left">重要備註</label>
                         <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100 text-sm text-amber-800 italic text-left">${item.note}</div></section>
                 </div>
             `;
             const linksContainer = document.getElementById('links-container');
             if (item.links && item.links.length > 0) {
-                linksContainer.innerHTML = `<label class="text-[10px] font-black text-slate-300 uppercase block mb-3 tracking-widest text-center">Reference Links</label>` + 
+                linksContainer.innerHTML = `<label class="text-[10px] font-black text-slate-300 uppercase block mb-3 tracking-widest text-center">參考連結 (點選開啟)</label>` + 
                 item.links.map(link => `
                     <a href="${link.url}" target="_blank" class="flex items-center justify-between bg-indigo-900 text-white px-5 py-4 rounded-2xl font-bold shadow-md active:bg-indigo-800 mb-2">
-                        <span class="text-sm">${link.label}</span>
+                        <span class="text-sm text-left">${link.label}</span>
                         <i class="fas fa-external-link-alt text-xs text-indigo-300"></i>
                     </a>
                 `).join('');
             } else { linksContainer.innerHTML = ''; }
-            document.getElementById('detail-page').classList.replace('slide-out', 'slide-in');
+            const detailPage = document.getElementById('detail-page');
+            detailPage.classList.remove('slide-out');
+            detailPage.classList.add('slide-in');
         }
 
         function closeDetail() {
-            document.getElementById('detail-page').classList.replace('slide-in', 'slide-out');
+            const detailPage = document.getElementById('detail-page');
+            detailPage.classList.remove('slide-in');
+            detailPage.classList.add('slide-out');
         }
         init();
     </script>
