@@ -16,7 +16,6 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .active-nav { color: #4f46e5; }
-        /* 增加平滑滾動與 iOS 彈性效果 */
         .scroll-container { -webkit-overflow-scrolling: touch; }
     </style>
 </head>
@@ -63,7 +62,6 @@
                 </div>
                 <div class="select-none text-left">
                     <h3 class="font-bold text-indigo-600 border-l-4 border-indigo-600 pl-3 mb-4 uppercase text-xs tracking-widest">生活實用資訊</h3>
-                    
                     <ul class="text-sm text-slate-600 space-y-3">
                         <li class="bg-slate-50 p-4 rounded-xl shadow-sm border border-slate-100">
                             <div class="flex items-center mb-3">
@@ -79,36 +77,24 @@
                                     <p class="font-bold text-emerald-600 text-xs uppercase tracking-wider mb-1">B. 自助洗衣店 (便宜建議)</p>
                                     <p class="text-slate-700 font-bold text-sm">洗衣 6kg / £6 | 烘乾 30min / £3</p>
                                     <ul class="mt-2 space-y-2 text-xs text-slate-500">
-                                        <li class="flex items-center">
-                                            <span class="mr-1">📍</span>
-                                            <span class="font-bold text-slate-600">較近：</span>走路 5 分鐘 (09:00 - 19:00)
-                                        </li>
-                                        <li class="flex items-center">
-                                            <span class="mr-1">📍</span>
-                                            <span class="font-bold text-slate-600">較遠：</span>走路 10 分鐘 (07:00 - 21:30)
-                                        </li>
+                                        <li class="flex items-center"><span class="mr-1">📍</span><span class="font-bold text-slate-600">較近：</span>走路 5 分鐘 (09:00 - 19:00)</li>
+                                        <li class="flex items-center"><span class="mr-1">📍</span><span class="font-bold text-slate-600">較遠：</span>走路 10 分鐘 (07:00 - 21:30)</li>
                                     </ul>
                                 </div>
                             </div>
                         </li>
-
                         <li class="bg-slate-50 p-4 rounded-xl flex items-start border border-slate-100 shadow-sm">
                             <span class="text-lg mr-3 mt-0.5">💧</span>
                             <div class="flex-1">
                                 <p class="font-bold text-slate-800 text-sm mb-1">冰島溫泉提醒</p>
-                                <p class="text-slate-600 text-sm leading-relaxed">
-                                    藍湖溫泉水質易使頭髮乾澀，入池前務必<span class="text-rose-500 font-black mx-0.5">厚塗護髮乳</span>且勿洗掉。
-                                </p>
+                                <p class="text-slate-600 text-sm leading-relaxed">藍湖溫泉水質易使頭髮乾澀，入池前務必<span class="text-rose-500 font-black mx-0.5">厚塗護髮乳</span>且勿洗掉。</p>
                             </div>
                         </li>
-
                         <li class="bg-slate-50 p-4 rounded-xl flex items-start border border-slate-100 shadow-sm">
                             <span class="text-lg mr-3 mt-0.5">🎟️</span>
                             <div class="flex-1">
                                 <p class="font-bold text-slate-800 text-sm mb-1">荷蘭預約提醒</p>
-                                <p class="text-slate-600 text-sm leading-relaxed">
-                                    安妮之家與梵谷博物館須在 <span class="font-black text-indigo-600 underline underline-offset-4">6 週前</span> 上網搶票。
-                                </p>
+                                <p class="text-slate-600 text-sm leading-relaxed">安妮之家與梵谷博物館須在 <span class="font-black text-indigo-600 underline underline-offset-4">6 週前</span> 上網搶票。</p>
                             </div>
                         </li>
                     </ul>
@@ -121,7 +107,7 @@
                 <button onclick="closeDetail()" class="p-2 text-slate-600 active:bg-gray-200 rounded-full">
                     <i class="fas fa-arrow-left text-xl"></i>
                 </button>
-                <h2 id="detail-date" class="ml-4 font-bold text-slate-800 text-lg">日期詳情</h2>
+                <h2 id="detail-date" class="ml-4 font-bold text-slate-800 text-lg text-left">日期詳情</h2>
             </header>
             <main class="flex-1 overflow-y-auto p-6 space-y-8 scroll-container">
                 <div id="detail-content"></div>
@@ -149,7 +135,7 @@
             note: "著名英國童話《帕丁頓熊》中的主角名字Paddington Bear也是源自於此，總是拿著一個舊皮箱，穿著一件厚呢風衣，及一雙威靈頓長統靴的樣子是帕丁頓熊的經典裝扮。", 
             links: [{label: "1. 倫敦遊記影片", url: "https://www.instagram.com/reel/C9w9ob7tgI7/"}] },
             { date: "2/14 (六)", city: "倫敦", transport: "市區交通 / 步行", stay: "Point A Hotel Paddington", 
-            plan: "1. 早上吃完早餐，11:00-13:30去找大錘和Kevin（地點未定，在Victoria station和London Bridge station選一個地方）吃中餐}\n2. 拜訪Latifa 家。\n3. 市區觀光：西敏寺、國會大廈、大笨鐘、倫敦塔橋。", 
+            plan: "1. 早上吃完早餐，11:00-13:30去找大錘和Kevin吃中餐}\n2. 拜訪Latifa 家。\n3. 市區觀光：西敏寺、國會大廈、大笨鐘、倫敦塔橋。", 
             note: "Latifa 家地址為 50 Greenways, Beckenham, BR3 3NQ。", links: [] },
             { date: "2/15 (日)", city: "冰島", transport: "LHR -> KEF 13:40(GMT+0)(T5) -> 17:05(GMT+0)", stay: "Hotel Von (不含早餐)", 
             plan: "1. 抵達冰島，搭乘接駁前往雷克雅維克市區。\n2. 哈爾格林姆教堂 (Hallgrimskirkja)。\n3. 超市 Bónus 採買未來幾天糧食。\n4. 市區晚餐：Café Loki", 
@@ -185,18 +171,15 @@
             links: [] },
             { date: "2/24 (二)", city: "倫敦", transport: "市區交通", stay: "Point A Hotel Kings Cross", 
             plan: "牛津觀光", 
-            note: "牛津車站(Oxford Station)步行到牛津大學需走約15分鐘, 共計30多所學院也是散落在整個牛津城的各個街頭\n
-            1.Radcliffe Camera 英國第一間圓形圖書館\n
-            2.嘆息橋(Bridge of Signs)這座嘆息橋似乎是連接兩側辦公大樓及學生宿舍, 取名似乎來自劍橋大學內的嘆息橋, 背後故事滿有趣的，因橋大學內的嘆息橋似乎是連接學生宿舍與考場, 據說每當學校要準備進考場時都會紛紛在橋上嘆息因得有此名\n
-            3.英國基督教學院Christ Church Cathedral: 其中的學院餐廳(The Great Hall)就是電影《哈利波特》霍格華茲學生餐廳取景地 ", 
+            note: `牛津車站(Oxford Station)步行到牛津大學需走約15分鐘, 共計30多所學院也是散落在整個牛津城的各個街頭
+1.Radcliffe Camera 英國第一間圓形圖書館
+2.嘆息橋(Bridge of Signs)這座嘆息橋似乎是連接兩側辦公大樓及學生宿舍, 取名似乎來自劍橋大學內的嘆息橋, 背後故事滿有趣的
+3.英國基督教學院Christ Church Cathedral: 霍格華茲學生餐廳取景地`, 
             links: [] },
             { date: "2/25 (三)", city: "倫敦", transport: "火車 / 市區交通", stay: "Point A Hotel Kings Cross", 
-            plan: "1.白金漢宮 衛兵交接\n2.倫敦皇家馬廄(The Royal Mews)\n
-            3.SOHO(Genting Casino London Chinatown, 中國城賭場), Piccadilly circus, oxford street、柯芬園\n
-            4.波羅市場。\n
-            5. green park、海德公園、格林威治天文台（有點距離可去可不去）", 
-            note: "1.白金漢宮 衛兵交接(周一,三, 五, 日 早上11點)(週二, 四, 六 下午3點)網路上建議10點就先卡位\n
-            2.波羅市場必吃美食有：手撕豬三明治（Pulled Pork Sandwich）、鮭魚貝果（Smoked Salmon Bagel）、炸魚薯條（Fish & Chips）、Richard Haward’s Oysters 的生蠔、中東烤肉捲（Kebab Wrap)\n", 
+            plan: "1.白金漢宮 衛兵交接\n2.倫敦皇家馬廄(The Royal Mews)\n3.SOHO(Genting Casino London Chinatown, 中國城賭場), Piccadilly circus, oxford street、柯芬園\n4.波羅市場。\n5. green park、海德公園、格林威治天文台", 
+            note: `1.白金漢宮 衛兵交接(周一,三, 五, 日 早上11點)(週二, 四, 六 下午3點)建議10點就卡位
+2.波羅市場必吃：手撕豬三明治、鮭魚貝果、炸魚薯條、Richard Haward’s Oysters 生蠔、中東烤肉捲`, 
             links: [] },
             { date: "2/26 (四)", city: "倫敦", transport: "地鐵 / 雙層巴士", stay: "Point A Hotel Kings Cross", 
             plan: "1.King's Cross Station: Platfrom 9 3/4\n2.Coal Drop Yard\n3. 整理行李，準備隔日出發荷蘭。", 
@@ -213,7 +196,6 @@
             note: "生存成功！回台灣拉！提早 3 小時抵達機場。", links: [] }
         ];
 
-        // 渲染列表
         function renderDailyList() {
             const container = document.getElementById('tab-daily');
             container.innerHTML = travelData.map((item, index) => `
@@ -230,7 +212,6 @@
             `).join('');
         }
 
-        // 分頁切換
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(el => { el.classList.remove('active-nav'); el.classList.add('text-slate-400'); });
@@ -240,7 +221,6 @@
             document.getElementById('nav-' + tabName).classList.remove('text-slate-400');
         }
 
-        // 詳情控制
         function openDetail(index) {
             const item = travelData[index];
             document.getElementById('detail-date').innerText = item.date;
@@ -267,7 +247,6 @@
             document.getElementById('detail-page').classList.add('slide-out');
         }
 
-        // --- 手勢返回功能 (iOS 必備) ---
         let touchstartX = 0;
         let touchendX = 0;
         const detailPage = document.getElementById('detail-page');
@@ -278,17 +257,9 @@
 
         detailPage.addEventListener('touchend', e => {
             touchendX = e.changedTouches[0].screenX;
-            handleGesture();
+            if (touchendX - touchstartX > 100) closeDetail();
         }, false);
 
-        function handleGesture() {
-            // 如果右滑超過 100 像素，則返回
-            if (touchendX - touchstartX > 100) {
-                closeDetail();
-            }
-        }
-
-        // 初始化
         window.onload = () => { renderDailyList(); };
     </script>
 </body>
